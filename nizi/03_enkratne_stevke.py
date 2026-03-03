@@ -10,6 +10,15 @@
 #     >>> kolikokrat_se_pojavi_stevka(1, 1)
 #     1
 # =============================================================================
+def kolikokrat_se_pojavi_stevka(k, n):
+    n = str(n)
+    k = str(k)
+    if n == "":
+        return 0
+    elif n[0] == k:
+        return 1 + kolikokrat_se_pojavi_stevka(k, n[1:])
+    else:
+        return kolikokrat_se_pojavi_stevka(k, n[1:])
 
 # =====================================================================@020026=
 # 2. podnaloga
@@ -21,7 +30,14 @@
 #     >>> ali_ima_enkratne_stevke(80085)
 #     False
 # =============================================================================
-
+def ali_ima_enkratne_stevke(n):
+    enice = n % 10
+    if n < 10:
+        return True
+    elif kolikokrat_se_pojavi_stevka(enice, n // 10) > 0:
+        return False
+    else: 
+         return ali_ima_enkratne_stevke(n // 10)
 
 
 

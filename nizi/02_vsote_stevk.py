@@ -4,26 +4,52 @@
 # 1. podnaloga
 # Sestavite funkcijo `vsota_stevk(n)`, ki vrne vsoto števk števila `n`.
 # =============================================================================
+def vsota_stevk(n):
+    if n < 10:
+        return n
+    else:
+        enice = n % 10
+        return enice + vsota_stevk(n // 10) 
 
+        
 # =====================================================================@000957=
 # 2. podnaloga
 # Sestavite funkcijo `vsota_vecjih_stevk(n, k)`, ki vrne vsoto tistih števk
 # števila `n`, ki so večje ali enake `k`. Če parametra `k` ne podamo, naj
 # funkcija vrne vsoto vseh števk števila `n`.
 # =============================================================================
-
+def vsota_vecjih_stevk(n, k=None):
+    if n == 0:
+        return 0
+    enice = n % 10
+    ostalo = n // 10
+    if k == None or enice >= k:
+        return enice + vsota_vecjih_stevk(ostalo, k)
+    else:
+        return vsota_vecjih_stevk(ostalo, k)
 # =====================================================================@000958=
 # 3. podnaloga
 # Sestavite funkcijo `vsota_stevk_stevil_med(m, n)`, ki vrne vsoto števk
 # vseh števil med vključno `m` in `n`.
 # =============================================================================
-
+def vsota_stevk_stevil_med(m, n):
+    if n < m:
+        return 0
+    elif m == n:
+        return vsota_stevk(m)
+    else:
+        return vsota_stevk(m) + vsota_stevk_stevil_med(m + 1, n)
+    
 # =====================================================================@000959=
 # 4. podnaloga
 # Sestavite **učinkovito** funkcijo `najmanjse_stevilo_z_vsoto_stevk(n)`,
 # ki izračuna točno to, kar piše v njenem imenu.
 # =============================================================================
-
+def najmanjse_stevilo_z_vsoto_stevk(n):
+    if n < 10:
+        return n
+    else:
+        return najmanjse_stevilo_z_vsoto_stevk(n - 9) * 10 + 9
 
 
 

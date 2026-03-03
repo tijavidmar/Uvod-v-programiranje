@@ -22,7 +22,13 @@
 #     >>> stirling(10,3)
 #     9330
 # =============================================================================
-
+def stirling(n, k):
+    if n == 0 and k == 0:
+        return 1
+    elif n == 0 or k == 0:
+        return 0
+    else:
+        return k * stirling(n-1, k) + stirling(n-1, k-1)
 # =====================================================================@020024=
 # 2. podnaloga
 # Stirlingova števila druge vrste lahko računamo tudi po naslednji direktni
@@ -40,7 +46,18 @@
 #     55980
 #     >>>
 # =============================================================================
+def stirling_vsota(n, k, j):
+    if j == 0:
+        return k ** n
+    else:
+        clen = (-1) ** j * binomski_ucinkovit(k, j) * (k - j) ** n
+        return clen + stirling_vsota(n, k, j - 1) 
 
+def binomski_ucinkovit(n, k):
+    if k == 0:
+        return 1
+    else:
+        return (n - k + 1) * binomski_ucinkovit(n, k - 1) // k
 # =====================================================================@020027=
 # 3. podnaloga
 # S pomočjo funkcije `stirling_vsota` iz prejšnje podnaloge
@@ -53,6 +70,19 @@
 #     >>> stirling_direktno(10,3)
 #     9330
 # =============================================================================
+def fakulteta(n):
+    if n == 0:
+        return 1
+    else:
+        return n * fakulteta(n - 1)
+
+def stirling_direktno(n, k):
+    if k == 0 and n == 0:
+        return 1
+    elif k == 0 or n == 0:
+        return 0
+    else:
+        return stirling_vsota(n, k, k) // fakulteta(k)
 
 
 
