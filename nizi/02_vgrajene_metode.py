@@ -7,7 +7,8 @@
 #     >>> prezrcali('abeceda')
 #     'adeceba'
 # =============================================================================
-
+def prezrcali(niz):
+    return niz[::-1]
 # =====================================================================@027492=
 # 2. podnaloga
 # Sestavite funkcijo `je_palindrom`, ki preveri, če je niz palindrom.
@@ -15,7 +16,11 @@
 #     >>> je_palindrom('kajak')
 #     True
 # =============================================================================
-
+def je_palindrom(niz):
+    if niz == niz[::-1]:
+        return True
+    else:
+        return False
 # =====================================================================@027483=
 # 3. podnaloga
 # Napiši funkcijo `odstrani_samoglasnike`, ki sprejme niz in vrne nov niz brez
@@ -24,7 +29,11 @@
 #     >>> odstrani_samoglasnike("aeoIcesta")
 #     "cesta"
 # =============================================================================
-
+def odstrani_samoglasnike(niz):
+    if niz[0] in "aeiouAEIOU":
+        return odstrani_samoglasnike(niz[1:])
+    else:
+        return niz
 # =====================================================================@027484=
 # 4. podnaloga
 # Sestavite funkcijo `obrni_oklepaje`, ki sprejme niz, ki vsebuje zgolj cela
@@ -34,7 +43,15 @@
 #     >>> obrni_oklepaje("((()(3+4)))")
 #     ")))()3+4((("
 # =============================================================================
-
+def obrni_oklepaje(niz):
+    if niz == "":
+        return ""
+    elif niz[0] == "(":
+        return ")" + obrni_oklepaje(niz[1:])
+    elif niz[0] == ")":
+        return "(" + obrni_oklepaje(niz[1:])
+    else:
+        return niz[0] + obrni_oklepaje(niz[1:])
 # =====================================================================@027485=
 # 5. podnaloga
 # Sestavite funkcijo `prestej_posebno`, ki sprejme niz, znak `c` in število `k`
@@ -45,7 +62,19 @@
 #     >>> prestej_posebno("aa  a ", "a", 3)
 #     1
 # =============================================================================
-
+def prestej_posebno(niz, c, k):
+    if niz == "":
+        return 0
+    if k > 0:
+        if niz[0] == c:
+            return prestej_posebno(niz[1:], c, k-1)
+        else:
+            return prestej_posebno(niz[1:], c, k)
+    else:
+        if niz[0] == " ":
+            return 1 + prestej_posebno(niz[1:], c, k)
+        else:
+            return prestej_posebno(niz[1:], c, k)
 
 
 

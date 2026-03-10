@@ -13,7 +13,8 @@
 #     >>> pozdrav("imaM več imen", "In en sam priimek")
 #     "Lep pozdrav! Imam Več Imen In En Sam Priimek."
 # =============================================================================
-
+def pozdrav(ime, priimek):
+    return f"Lep pozdrav! {ime.title()} {priimek.title()}."
 # =====================================================================@027494=
 # 2. podnaloga
 # Sestavite funkcijo `zmnozi`, ki sprejme dve števili in vrne njun produkt
@@ -25,7 +26,9 @@
 #     >>> zmnozi(12.3456789123, 100000)
 #     "1234567.8912300"
 # =============================================================================
-
+def zmnozi(s1, s2):
+    produkt = s1 * s2
+    return f"{produkt:.7f}"
 # =====================================================================@027495=
 # 3. podnaloga
 # Sestavite funkcijo `turist`, ki sprejme številko računa, ceno, stopnjo davka
@@ -37,10 +40,17 @@
 #     "-RACUN---0000010\nCena: 100 EUR\nDDV: 22\nSkupno: 122\nHvala za obisk"
 #     >>> turist(10, 50, 22)
 #     "-RACUN---0000010\nCena: 50 EUR\nDDV: 11\nSkupno: 61\nHvala za obisk"
-# =============================================================================
-
-
-
+# ============================================================================= 
+def turist(st_racuna, cena, davek):
+    st_racuna_str = str(st_racuna).zfill(7)
+    ddv = int(cena * davek / 100)
+    skupno = cena + ddv
+    racun = (f"-RACUN---{st_racuna_str}\n"
+             f"Cena: {cena} EUR\n"
+             f"DDV: {ddv}\n"
+             f"Skupno: {skupno}\n"
+             f"Hvala za obisk")
+    return racun
 
 
 

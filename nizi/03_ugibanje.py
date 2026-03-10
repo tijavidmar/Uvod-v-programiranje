@@ -13,8 +13,16 @@
 #     Žal "trinajst" ni celo število, poskusi ponovno!
 #     > Vnesi celo število: 10
 #     10
-# =============================================================================
-
+# =============================================================================  
+def preberi_celo_stevilo():
+    niz = input('> Vnesi celo število: ')
+    if niz.isnumeric():
+        return int(niz)
+    elif niz[0] == "-" and niz[1:].isnumeric():
+        return int(niz)
+    else:
+        print(f'Žal "{niz}" ni celo število, poskusi ponovno!')
+        return preberi_celo_stevilo()
 # =====================================================================@027497=
 # 2. podnaloga
 # S pomočjo prejšnje funkcije sestavi funkcijo `ugibaj`, ki sprejme pravilni
@@ -36,7 +44,16 @@
 #     > Vnesi celo število: 20
 #     BRAVO! Res sem si zamislil število 20!
 # =============================================================================
-
+def ugibaj(n):
+    x = preberi_celo_stevilo()
+    if n == x:
+        print(f"BRAVO! Res sem si zamislil število {n}!")
+    elif n < x:
+        print("Moje število je manjše!")
+        ugibaj(n)
+    else:
+        print("Moje število je večje!")
+        ugibaj(n)
 # =====================================================================@027623=
 # 3. podnaloga
 # Sestavite funkcijo `racunalnik_ugiba(spodnji, zgornji)`, ki z metodo bisekcije
@@ -70,8 +87,23 @@
 #     E/V/M> e
 #     Juhu, uganil sem! Zamislil si si število 12!
 # =============================================================================
+def racunalnik_ugiba(spodnji, zgornji):
+    if spodnji == zgornji:
+        print(f"Juhu, uganil sem! Zamislil si si število {spodnji}!")
+        return
 
+    sredina = (spodnji + zgornji) // 2
+    odgovor = input(f"Ali je tvoje število Enako/Večje/Manjše od {sredina}?\nE/V/M> ")
 
+    if odgovor == "V" or odgovor == "v":
+        racunalnik_ugiba(sredina + 1, zgornji)
+    elif odgovor == "M" or odgovor == "m":
+        racunalnik_ugiba(spodnji, sredina - 1)
+    elif odgovor == "E" or odgovor == "e":
+        print(f"Juhu, uganil sem! Zamislil si si število {sredina}!")
+    else:
+        print("Ali lahko daš normalen odgovor?")
+        racunalnik_ugiba(spodnji, zgornji)
 
 
 

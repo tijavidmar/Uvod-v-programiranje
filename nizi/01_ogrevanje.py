@@ -11,7 +11,13 @@
 #     >>> ima_samoglasnike("čmrlj")
 #     False
 # =============================================================================
-
+def ima_samoglasnike(niz):
+    if niz == "":
+        return False
+    if niz[0] in "aeiou":
+        return True
+    else:
+        return ima_samoglasnike(niz[1:])
 # =====================================================================@027480=
 # 2. podnaloga
 # Sestavite funkcijo `skoraj_enaka`, ki spreje dva niza in preveri, ali sta niza
@@ -23,7 +29,11 @@
 #     >>> skoraj_enaka("Čuden NiZ", "čUDen niZ")
 #     True
 # =============================================================================
-
+def skoraj_enaka(niz1, niz2):
+    if niz1.lower() == niz2.lower():
+        return True
+    else:
+        return False
 # =====================================================================@027481=
 # 3. podnaloga
 # Sestavite funkcijo `zamenjaj`, ki spreje dva niza in vrne prvi niz, kjer je
@@ -36,7 +46,11 @@
 #     >>> zamenjaj("abeceda", "")
 #     "abeceda"
 # =============================================================================
-
+def zamenjaj(niz1, niz2):
+    if niz1 == "" or niz2 == "":
+        return niz1
+    else:
+        return niz1[:len(niz1) - 1] + niz2[-1]
 # =====================================================================@027482=
 # 4. podnaloga
 # Sestavite funkcijo `zlij`, ki sprejme dva niza in vrne nov niz, kjer se
@@ -50,10 +64,13 @@
 #     >>> zlij("AAAAA", "BBB")
 #     "ABABABAA"
 # =============================================================================
-
-
-
-
+def zlij(niz1, niz2):
+    if niz1 == "":
+        return niz2
+    if niz2 == "":
+        return niz1
+    else:
+        return niz1[0] + niz2[0] + zlij(niz1[1:], niz2[1:])
 
 
 

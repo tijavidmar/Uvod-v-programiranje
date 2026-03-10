@@ -10,7 +10,14 @@
 #     >>> filtriraj("Ne gremo še domov", "ngm")
 #     "N__g__m_______m__"
 # =============================================================================
-
+def filtriraj(niz1, niz2):
+    if niz1 == "":
+        return ""
+    else:
+        if niz1[0].lower() in niz2.lower():
+            return niz1[0] + filtriraj(niz1[1:], niz2)
+        else:
+            return "_" + filtriraj(niz1[1:], niz2)
 # =====================================================================@027490=
 # 2. podnaloga
 # Sestavite funkcijo `pretvori`, ki sprejme niz in bazo ter vrne podano število
@@ -23,7 +30,12 @@
 #     >>> pretvori("2ACBD04", 36)
 #     4978911892
 # =============================================================================
-
+def pretvori(niz, baza):
+    import string
+    znaki = "0123456789" + string.ascii_uppercase  
+    if not niz:
+        return 0
+    return znaki.index(niz[-1].upper()) + baza * pretvori(niz[:-1], baza)
 # =====================================================================@027489=
 # 3. podnaloga
 # Sestavite funkcijo `izbrisi_podvojene`, ki sprejme niz in odstrani vse
@@ -35,7 +47,19 @@
 #     >>> izbrisi_podvojene("abaab")
 #     "abb"
 # =============================================================================
-
+def izbrisi_podvojene(niz):
+    niz = niz.lower()
+    if len(niz) < 2:
+        return niz
+    if niz[0] == niz[1]:
+        def preskoci_blok(s, znak):
+            if s == "" or s[0] != znak:
+                return s
+            return preskoci_blok(s[1:], znak)
+        preostanek = preskoci_blok(niz, niz[0])
+        return izbrisi_podvojene(preostanek)
+    else:
+        return niz[0] + izbrisi_podvojene(niz[1:])
 # =====================================================================@027487=
 # 4. podnaloga
 # Sestavite funkcijo `vsak_k_ti`, ki sprejme niz in parameter `k` ter vrne nov
@@ -47,7 +71,11 @@
 #     >>> vsak_k_ti("abcdefghijk", 0)
 #     ""
 # =============================================================================
-
+def vsak_k_ti(niz, k):
+    if 0 < k < len(niz):
+        return niz[::k]
+    else:
+        return ""
 # =====================================================================@027488=
 # 5. podnaloga
 # Sestavitev funkcijo `zaporedje`, ki sprejme niz in vrne nov niz sestavljen iz
@@ -57,9 +85,12 @@
 #     >>> zaporedje("0123456789X")
 #     "0136X"
 # =============================================================================
-
-
-
+def zaporedje(niz, i=0, n=0):
+    if i >= len(niz):
+        return ""
+    else:
+        naslednji = (n+1)*(n+2)//2
+        return niz[i] + zaporedje(niz, naslednji, n+1)
 
 
 
