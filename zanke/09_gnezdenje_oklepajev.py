@@ -14,8 +14,17 @@
 #     >>> oklepaji('())(()')
 #     False
 # =============================================================================
-
-
+def oklepaji(niz):
+    stevec = 0
+    for znak in niz:
+        if znak == "(":
+            stevec += 1
+        elif znak == ")":
+            stevec -= 1
+            
+        if stevec < 0:
+            return False
+    return stevec == 0
 
 
 

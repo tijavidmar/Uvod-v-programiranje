@@ -9,17 +9,17 @@
 # *Funkciji sta že definirani v datoteki.*
 # =============================================================================
 def vsebuje_vprasaj(niz):
-for znak in niz:
-if znak == "?":
-return True
-return False
+    for znak in niz:
+        if znak == "?":
+            return True
+    return False
 
 def odstrani_presledke(niz):
     nov_niz = ""
-    return nov_niz
-            nov_niz += znak
-        if not znak == " ":
     for znak in niz:
+        if not znak == " ":
+            nov_niz += znak
+    return nov_niz
 # =====================================================================@020189=
 # 2. podnaloga
 # Napišite funkcijo `odstrani_veckratne_vprasaje`, ki sprejme niz ter mu
@@ -34,7 +34,16 @@ def odstrani_presledke(niz):
 #     >>> odstrani_veckratne_vprasaje('Ananas')
 #     'Ananas'
 # =============================================================================
-
+def odstrani_veckratne_vprasaje(niz):
+    nov = ""
+    prejsnji = ""
+    
+    for znak in niz:
+        if znak != "?" or prejsnji != "?":
+            nov += znak
+        prejsnji = znak
+            
+    return nov
 # =====================================================================@020191=
 # 3. podnaloga
 # Implementirajte [Evklidov algoritem](https://sl.wikipedia.org/wiki/Evklidov_algoritem)
@@ -45,7 +54,10 @@ def odstrani_presledke(niz):
 #     >>> evklidov_algoritem(81, 36)
 #     9
 # =============================================================================
-
+def evklidov_algoritem(a, b):
+    while b > 0:
+        a, b = b, a % b
+    return a
 
 
 

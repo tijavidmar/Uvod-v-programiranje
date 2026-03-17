@@ -10,7 +10,14 @@
 # nizem, sestavljenim iz znakov `+` in `-`. Na ostale znake v nizu se
 # ne oziramo.
 # =============================================================================
-
+def celostevilski(niz):
+    stevilo = 0
+    for znak in niz:
+        if znak == "+":
+            stevilo += 1
+        elif znak == "-":
+            stevilo -= 1
+    return stevilo
 # =====================================================================@009863=
 # 2. podnaloga
 # Napišite število, v katerem se konča sprehod, podan z:
@@ -60,7 +67,7 @@
 #     ------+--+-+--+-++-+++-+-++-+++++--+--+++++-+-++-+-++-++-+---++-++--+-
 #     ------+--+-+--+-++-+++-+-++-+++++--+--+++++-+-++-+-++-++-+---++-++--+-
 # =============================================================================
-
+42
 # =====================================================================@009864=
 # 3. podnaloga
 # Sestavite funkcijo `ravninski`, ki sprejme niz, ki
@@ -71,7 +78,19 @@
 # sestavljenim iz črk `S`, `J`, `V` ali `Z`, odvisno od smeri
 # (sever, jug, vzhod, zahod). Na ostale znake v nizu se ne oziramo.
 # =============================================================================
-
+def ravninski(niz):
+    x = 0
+    y = 0
+    for znak in niz:
+        if znak == "S":
+            y += 1
+        elif znak == "J":
+            y -= 1
+        elif znak == "V":
+            x += 1
+        elif znak == "Z":
+            x -= 1
+    return (x, y)
 # =====================================================================@009865=
 # 4. podnaloga
 # Sestavite funkcijo `hitri(tek)`, ki sprejme niz, ki predstavlja
@@ -87,7 +106,26 @@
 # na sever, dolg 5 korakov. Privzamete lahko, da zaporednih števk v
 # nizu ni, ter da se na ostale znake v nizu ne oziramo.
 # =============================================================================
-
+def hitri(tek):
+    x = 0
+    y = 0
+    korak = 1
+    for znak in tek:
+        if znak.isdigit():
+            korak = int(znak)
+        elif znak == "S":
+            y += korak
+            korak = 1
+        elif znak == "J":
+            y -= korak
+            korak = 1
+        elif znak == "V":
+            x += korak
+            korak = 1
+        elif znak == "Z":
+            x -= korak
+            korak = 1 
+    return (x, y)
 
 
 

@@ -15,6 +15,14 @@
 #     >>> pravilni_del_gesla('dialektičnomaterialističen', 'kajeto')
 #     '__a_ekt___o_ate__a___t__e_'
 # =============================================================================
+def pravilni_del_gesla(geslo, ugibane):
+    nov = ""
+    for crka in geslo:
+        if crka in ugibane:
+            nov += crka
+        else:
+            nov += "_"
+    return nov
 
 # =====================================================================@024176=
 # 2. podnaloga
@@ -29,7 +37,12 @@
 #     >>> nepravilni_ugibi('dialektičnomaterialističen', 'kajeto?')
 #     'j?'
 # =============================================================================
-
+def nepravilni_ugibi(geslo, ugibane):
+    nov = ""
+    for crka in ugibane:
+        if crka not in geslo:
+            nov += crka
+    return nov
 
 
 

@@ -9,7 +9,11 @@
 # Sestavite funkcijo `priblizek_po_korakih(n, k)`, ki po zgornjem postopku
 # izračuna `k`-ti približek korena števila `n`.
 # =============================================================================
-
+def priblizek_po_korakih(n, k):
+    x = n / 2
+    for i in range(k):
+        x = (x + n / x) / 2
+    return x
 # =====================================================================@001004=
 # 2. podnaloga
 # Sestavite funkcijo `priblizek_do_natancnosti(n, eps)`, ki po zgornjem
@@ -17,7 +21,11 @@
 # približka od `n` razlikuje za manj kot `eps`. Smislena vrednost za argument
 # `eps` je npr. $10^{-6}$.
 # =============================================================================
-
+def priblizek_do_natancnosti(n, eps):
+    x = n / 2
+    while abs(n - x ** 2) >= eps:
+        x = (x + n / x) / 2
+    return x
 
 
 

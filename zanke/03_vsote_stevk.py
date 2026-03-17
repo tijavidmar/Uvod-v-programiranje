@@ -6,19 +6,34 @@
 # 1. podnaloga
 # Sestavite funkcijo `vsota_stevk`, ki vrne vsoto števk podanega števila.
 # =============================================================================
-
+def vsota_stevk(n):
+    vsota = 0
+    for stevka in str(n):
+        vsota += int(stevka)
+    return vsota
 # =====================================================================@000982=
 # 2. podnaloga
 # Sestavite funkcijo `vsota_vecjih_stevk(n, k)`, ki vrne vsoto tistih števk
 # števila `n`, ki so večje ali enake `k`. Če parametra `k` ne podamo, naj
 # funkcija vrne vsoto vseh števk števila `n`.
 # =============================================================================
-
+def vsota_vecjih_stevk(n, k=0):
+    vsota = 0
+    for stevka in str(n):
+        if int(stevka) >= k:
+            vsota += int(stevka)
+    return vsota
 # =====================================================================@000983=
 # 3. podnaloga
 # Sestavite funkcijo `vsota_stevk_stevil_med(m, n)`, ki vrne vsoto števk
 # vseh števil med vključno `m` in `n`.
 # =============================================================================
+def vsota_stevk_stevil_med(m, n):
+    vsota = 0
+    for x in range(m, n + 1):
+        for stevka in str(x):
+            vsota += int(stevka)
+    return vsota
 
 
 

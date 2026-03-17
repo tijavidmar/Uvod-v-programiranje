@@ -15,13 +15,18 @@
 # Sestavite funkcijo `naslednji_priblizek`, ki iz podanega približka po
 # zgornjem postopku izračuna naslednji približek števila $\phi$.
 # =============================================================================
-
+def naslednji_priblizek(x):
+    return 1 + 1 / x
 # =====================================================================@001001=
 # 2. podnaloga
 # Sestavite funkcijo `priblizek(k)`, ki izračuna `k`. približek števila
 # $\phi$. Za začetni približek (ko je `k` enak $0$) vzamite število $1$.
 # =============================================================================
-
+def priblizek(k):
+    x = 1
+    for i in range(1, k + 1):
+        x = 1 + 1 / x
+    return x
 # =====================================================================@001002=
 # 3. podnaloga
 # Sestavite funkcijo `natancni_priblizek`, ki sprejme pozitivno realno 
@@ -29,6 +34,12 @@
 # števila $\phi$, ki se od prejšnjega približka razlikuje za manj kot
 # podano natančnost.
 # =============================================================================
+def natancni_priblizek(eps):
+    prejsnji = 1
+    trenutni = naslednji_priblizek(1)
+    while abs(trenutni - prejsnji) >= eps:
+        prejsnji, trenutni = trenutni, naslednji_priblizek(trenutni)
+    return trenutni
 
 
 
