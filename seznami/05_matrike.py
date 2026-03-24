@@ -11,13 +11,22 @@
 #     >>> identiteta(3)
 #     [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 # =============================================================================
-
+def identiteta(n):
+    matrika = []
+    for i in range(n):
+        matrika.append(n * [0])
+        matrika[i][i] = 1
+    return matrika
 # =====================================================================@020211=
 # 2. podnaloga
 # Sestavite funkcijo `sled_matrike`, ki izračuna sled oz. vsoto diagonalnih
 # elementov matrike.
 # =============================================================================
-
+def sled_matrike(matrika):
+    sled = 0
+    for i in range(len(matrika)):
+        sled += matrika[i][i]
+    return sled
 # =====================================================================@013396=
 # 3. podnaloga
 # Sestavite funkcijo `transponiraj`, ki sestavi in vrne novo matriko in sicer
@@ -26,7 +35,14 @@
 #     >>> transponiraj([[1, 2], [3, 4]])
 #     [[1, 3], [2, 4]]
 # =============================================================================
-
+def transponiraj(matrika):
+    transponiranka = []
+    for j in range(len(matrika[0])):   
+        nova_vrstica = []
+        for i in range(len(matrika)):   
+            nova_vrstica.append(matrika[i][j])
+        transponiranka.append(nova_vrstica)
+    return transponiranka
 # =====================================================================@013397=
 # 4. podnaloga
 # Sestavite funkcijo `uporabi(mat, vec)`, ki matriko `mat` uporabi na vektorju
@@ -35,7 +51,14 @@
 #     >>> uporabi([[1, 3], [2, 4]], [5, 6])
 #     [23, 34]
 # =============================================================================
-
+def uporabi(mat, vec):
+    rezultat = []
+    for vrstica in mat:
+        vsota = 0
+        for i in range(len(vrstica)):
+            vsota += vrstica[i] * vec[i]
+        rezultat.append(vsota)
+    return rezultat 
 # =====================================================================@020276=
 # 5. podnaloga
 # Sestavite funkcijo `sestej`, ki sprejme dve matriki in sestavi ter vrne novo
@@ -44,7 +67,17 @@
 #     >>> sestej([[1, 0], [0, 1]], [[0, 2], [0, 0]])
 #     [[1, 2], [0, 1]]
 # =============================================================================
-
+def sestej(mat1, mat2):
+    rezultat = []
+    for i in range(len(mat1)):
+        element = 0
+        vrstica = []
+        for j in range(len(mat1[i])):
+            element = mat1[i][j] + mat2[i][j]
+            vrstica.append(element)
+        rezultat.append(vrstica)
+    return rezultat
+        
 
 
 

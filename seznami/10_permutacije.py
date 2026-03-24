@@ -18,7 +18,12 @@
 #     >>> je_permutacija([7, 3, 4, 5, 2, 6, 1])
 #     True
 # =============================================================================
-
+def je_permutacija(sez):
+    vrednost = True
+    for i in range(1, len(sez) + 1):
+        if i not in sez:
+            vrednost = False
+    return vrednost
 # =====================================================================@013405=
 # 2. podnaloga
 # Sestavite funkcijo `je_seznam_ciklov`, ki sprejme seznam seznamov in preveri,
@@ -31,7 +36,16 @@
 #     >>> je_seznam_ciklov([[8,1,4],[5,7,1]])
 #     False
 # =============================================================================
-
+def je_seznam_ciklov(sez):
+    vsi_elementi = []
+    for cikel in sez:
+        for el in cikel:
+            if el < 1:
+                return False
+            if el in vsi_elementi:
+                return False
+            vsi_elementi.append(el)
+    return True
 # =====================================================================@013406=
 # 3. podnaloga
 # Sestavite funkcijo `urejeni_cikli`, ki seznam ciklov pretvori v nov seznam
@@ -42,7 +56,15 @@
 #     >>> urejeni_cikli([[7, 3], [4], [5, 2, 1]])
 #     [[1, 5, 2], [3, 7]]
 # =============================================================================
-
+def urejeni_cikli(sez):
+    novi = []
+    for cikel in sez:
+        if len(cikel) > 1:
+            min_idx = cikel.index(min(cikel))
+            cikel = cikel[min_idx:] + cikel[:min_idx]
+            novi.append(cikel)
+    novi.sort(key=lambda x: x[0])
+    return novi
 # =====================================================================@013407=
 # 4. podnaloga
 # Sestavite funkcijo `iz_ciklov(cikli, dolzina)`, ki iz seznama ciklov `cikli`
@@ -55,7 +77,15 @@
 #     >>> iz_ciklov([[7, 3], [4], [5, 2, 1]], 9)
 #     [5, 1, 7, 4, 2, 6, 3, 8, 9]
 # =============================================================================
-
+def iz_ciklov(cikli, dolzina=0):
+    for cikel in cikli:
+        dolzina = max(dolzina, max(cikel))
+    perm = list(range(1, dolzina + 1))
+    for cikel in cikli:
+        for i in range(1, len(cikel)):
+            perm[cikel[i - 1] - 1] = cikel[i]
+        perm[cikel[-1] - 1] = cikel[0]
+    return perm
 # =====================================================================@013408=
 # 5. podnaloga
 # Sestavite funkcijo `v_cikle`, ki iz permutacije sestavi njeno predstavitev s
@@ -64,7 +94,19 @@
 #     >>> v_cikle([5, 1, 7, 4, 2, 6, 3])
 #     [[1, 5, 2], [3, 7]]
 # =============================================================================
-
+def v_cikle(perm):
+    cikli = []
+    pregledani = []
+    for i in range(1, len(perm) + 1):
+        j = i
+        cikel = []
+        while j not in pregledani:
+            pregledani.append(j)
+            cikel.append(j)
+            j = perm[j - 1]
+        if len(cikel) > 1:
+            cikli.append(cikel)
+    return cikli 
 # =====================================================================@013409=
 # 6. podnaloga
 # Sestavite funkcijo `inverz_perm`, ki sestavi in vrne inverz dane permutacije
@@ -73,7 +115,12 @@
 #     >>> inverz_perm([7, 3, 4, 5, 2, 1, 6])
 #     [6, 5, 2, 3, 4, 7, 1]
 # =============================================================================
-
+def inverz_perm(perm):
+    n = len(perm)
+    inv = [0] * n
+    for i in range(n):
+        inv[perm[i] - 1] = i + 1
+    return inv
 # =====================================================================@013410=
 # 7. podnaloga
 # Sestavite funkcijo `inverz_cikli`, ki sestavi in vrne inverz dane
@@ -83,7 +130,17 @@
 #     >>> inverz_cikli([[7, 3], [4], [5, 2, 1]])
 #     [[1, 2, 5], [3, 7]]
 # =============================================================================
+def inverz_cikli(cikli):
+    novi = []
 
+    for cikel in cikli:
+        if len(cikel) > 1:
+            c = cikel[::-1]
+            min_idx = c.index(min(c))
+            c = c[min_idx:] + c[:min_idx]
+            novi.append(c)
+    novi.sort(key=lambda x: x[0])
+    return novi
 # =====================================================================@013411=
 # 8. podnaloga
 # Sestavite funkcijo `ciklicni_tip(cikli, dolzina)`, ki vrne ciklični tip
@@ -99,7 +156,18 @@
 #     >>> ciklicni_tip([[7, 3], [4], [5, 2, 1]], 9)
 #     (4, 1, 1)
 # =============================================================================
-
+def ciklicni_tip(cikli, dolzina=0):
+    for cikel in cikli:
+        dolzina = max(dolzina, max(cikel))
+    dolzine = []
+    for cikel in cikli:
+        dolzine.append(len(cikel))
+    najdaljsi_cikel = max(dolzine)
+    tip = []
+    for i in range(1, najdaljsi_cikel + 1):
+        tip.append(dolzine.count(i))
+    tip[0] += dolzina - sum(dolzine)
+    return tuple(tip)
 # =====================================================================@013412=
 # 9. podnaloga
 # Sestavite funkcijo `red`, ki izračuna in vrne red permutacije podane s cikli.
@@ -115,7 +183,15 @@
 #     >>> red([[7, 3], [4], [5, 2, 1]])
 #     6
 # =============================================================================
-
+from math import gcd
+def lcm(a, b):
+    return a * b // gcd(a, b)
+def red(cikli):
+    r = 1
+    for cikel in cikli:
+        if len(cikel) > 0:
+            r = lcm(r, len(cikel))
+    return r
 
 
 

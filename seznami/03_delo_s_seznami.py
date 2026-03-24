@@ -11,7 +11,8 @@
 #     >>> razpolovi_seznam([5, 4, 3, 2, 1])
 #     ([5, 4], [3, 2, 1])
 # =============================================================================
-
+def razpolovi_seznam(sez):
+    return (sez[:len(sez) // 2], sez[len(sez) // 2:])
 # =====================================================================@009770=
 # 2. podnaloga
 # Sestavite funkcijo `zamenjaj_elementa(sez, i, j)`, ki iz seznama `sez` sestavi
@@ -26,7 +27,18 @@
 #     >>> zamenjaj_elementa([1, 2, 3, 4], 1, 2017)
 #     [1, 2, 3, 4]
 # =============================================================================
-
+def zamenjaj_elementa(sez, i, j):
+    if i < 0 or j < 0 or i >= len(sez) or j >= len(sez):
+        return sez
+    nov = []
+    for k in range(len(sez)):
+        if k == i:
+            nov.append(sez[j])
+        elif k == j:
+            nov.append(sez[i])
+        else:
+            nov.append(sez[k])
+    return nov
 # =====================================================================@009771=
 # 3. podnaloga
 # Sestavite funkcijo `porezani_podseznami`, ki sprejme seznam in zgradi nov
@@ -36,7 +48,11 @@
 #     >>> porezani_podseznami([1, 2, 3, 4])
 #     [[1, 2, 3, 4], [2, 3, 4], [3, 4], [4], []]
 # =============================================================================
-
+def porezani_podseznami(sez):
+    nov = []
+    for i in range(len(sez) + 1):
+        nov.append(sez[i:])
+    return nov
 # =====================================================================@009812=
 # 4. podnaloga
 # Sestavite funkcijo `najvecji_element`, ki vrne največji element seznama. Če
@@ -47,7 +63,12 @@
 #     >>> najvecji_element([1, 4, 5, 5, 2, -10])
 #     5
 # =============================================================================
-
+def najvecji_element(sez):
+    najvecji = None
+    for el in sez:
+        if najvecji == None or el > najvecji:
+            najvecji = el
+    return najvecji
 # =====================================================================@020116=
 # 5. podnaloga
 # Sestavite funkcijo `zdruzi_sezname`, ki zdruzi seznam seznamov v en seznam,
@@ -58,9 +79,12 @@
 #     >>> zdruzi_sezname([[], [0], [], [0], [], [7], []])
 #     [0, 0, 7]
 # =============================================================================
-
-
-
+def zdruzi_sezname(sez):
+    nov = []
+    for podseznam in sez:
+        for el in podseznam:
+            nov.append(el)
+    return nov
 
 
 

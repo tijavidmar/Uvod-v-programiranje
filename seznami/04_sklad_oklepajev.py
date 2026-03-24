@@ -15,7 +15,24 @@
 #     >>> naivna_resitev("([})")
 #     False
 # =============================================================================
-
+def naivna_resitev(niz):
+    okrogli = 0
+    oglati = 0
+    zaviti = 0
+    for znak in niz:
+        if znak == "(":
+            okrogli += 1
+        elif znak == ")":
+            okrogli -= 1
+        elif znak == "[":
+            oglati += 1
+        elif znak == "]":
+            oglati -= 1
+        elif znak == "{":
+            zaviti += 1
+        elif znak == "}":
+            zaviti -= 1
+    return okrogli == 0 and oglati == 0 and zaviti == 0
 # =====================================================================@013394=
 # 2. podnaloga
 # Sestavite funkcijo `gnezdeni_oklepaji`, ki bo preverila, ali so v danem nizu
@@ -34,6 +51,20 @@
 # uklepajem na koncu seznama. V tem primeru zadnji element pomožnega seznama
 # odstranimo. Na koncu mora biti pomožni seznam prazen.
 # =============================================================================
+def gnezdeni_oklepaji(niz):
+    sez = []
+    for znak in niz:
+        if znak in "([{":
+            sez.append(znak)
+        elif znak in ")]}":
+            if len(sez) == 0:
+                return False
+            zadnji = sez[-1]
+            if (znak == ")" and zadnji == "(") or (znak == "]" and zadnji == "[") or (znak == "}" and zadnji == "{"):
+                sez.pop()
+            else:
+                return False
+    return len(sez) == 0
 
 
 

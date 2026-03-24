@@ -9,7 +9,13 @@
 #     >>> je_deljivo_s_katerim_od(20, [3, 4, 6])
 #     True
 # =============================================================================
-
+def je_deljivo_s_katerim_od(n, seznam):
+    vrednost = False
+    for el in seznam:
+        if n % el == 0:
+            vrednost = True
+            break
+    return vrednost
 # =====================================================================@009810=
 # 2. podnaloga
 # Definirajte funkcijo `prastevila_do`, ki vrne seznam vseh praštevil, ki so
@@ -18,17 +24,30 @@
 #     >>> prastevila_do(10)
 #     [2, 3, 5, 7]
 # =============================================================================
-
+def prastevila_do(n):
+    prastevila = []
+    for stevilo in range(2, n + 1):
+        je_prastevilo = True
+        for i in range(2, stevilo // 2 + 1):
+            if stevilo % i == 0:
+                je_prastevilo = False
+                break
+        if je_prastevilo:
+            prastevila.append(stevilo)
+    return prastevila         
 # =====================================================================@009811=
 # 3. podnaloga
 # Definirajte funkcijo `je_prastevilo`, ki vrne ali je število praštevilo.
 # =============================================================================
-
-
-
-
-
-
+def je_prastevilo(n):
+    je_prastevilo = True
+    if n <= 1:
+        return False
+    for stevilo in range(2, n // 2 + 1):
+        if n % stevilo == 0:
+            je_prastevilo = False
+            break
+    return je_prastevilo
 
 
 

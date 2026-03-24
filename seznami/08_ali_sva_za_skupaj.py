@@ -40,7 +40,11 @@
 #     >>> razbij_na_stevke(6)
 #     [6]
 # =============================================================================
-
+def razbij_na_stevke(n):
+    stevke = []
+    for stevka in str(n):
+        stevke.append(int(stevka))
+    return stevke
 # =====================================================================@013414=
 # 2. podnaloga
 # Sestavite funkcijo `prestej_crke(geslo, niz)`, ki vrne seznam pojavitev črk
@@ -52,7 +56,12 @@
 #     >>> prestej_crke('ŠANSE', 'prešeren')
 #     [1, 0, 1, 0, 3]
 # =============================================================================
-
+def prestej_crke(geslo, niz):
+    pojavitve = []
+    for crka in geslo.lower():
+        stevec = niz.count(crka)
+        pojavitve.append(stevec)
+    return pojavitve
 # =====================================================================@013415=
 # 3. podnaloga
 # Sestavite funkcijo `sestej_stevke(stevke)`, ki vrne seznam števk, ki ga
@@ -67,7 +76,16 @@
 #     >>> sestej_stevke([5, 1, 2])
 #     [6, 3]
 # =============================================================================
-
+def sestej_stevke(sez):
+    nov = []
+    for i in range(len(sez) - 1):
+        vsota = sez[i] + sez[i +1]
+        if vsota < 10:
+            nov.append(vsota)
+        else:
+            nov.append(vsota // 10)
+            nov.append(vsota % 10)
+    return nov
 # =====================================================================@013416=
 # 4. podnaloga
 # Sestavite funkcijo `ujemanje(oseba1, oseba2, geslo)`, ki po zgoraj opisanem
@@ -81,10 +99,12 @@
 #     >>> ujemanje('Julija Primic', 'France Prešeren', geslo='ŠANSE')
 #     87
 # =============================================================================
-
-
-
-
+def ujemanje(oseba1, oseba2, geslo="LOVES"):
+    niz = oseba1 + oseba2
+    stevilo_crk = prestej_crke(geslo, niz)
+    while len(stevilo_crk) > 2:
+        stevilo_crk = sestej_stevke(stevilo_crk)
+    return stevilo_crk[0] * 10 + stevilo_crk[1]
 
 
 

@@ -9,14 +9,24 @@
 # `(x0, y0)` leži v vsaj enem krogu v seznamu `krogi`, in `False`
 # sicer.
 # =============================================================================
-
+def v_uniji(x0, y0, krogi):
+    for krog in krogi:
+        (x, y, r) = krog
+        if (x0 - x)**2 + (y0 - y)**2 <= r**2:
+            return True
+    return False
 # =====================================================================@001312=
 # 2. podnaloga
 # Sestavite funkcijo `v_preseku(x, y, krogi)`, ki vrne `True`, če točka
 # `(x, y)` leži v vseh krogih v danem seznamu `krogi`, in `False`
 # sicer.
 # =============================================================================
-
+def v_preseku(x, y, krogi):
+    for krog in krogi:
+        (xs, ys, r) = krog
+        if (x - xs)**2 + (y - ys)**2 > r**2:
+            return False
+    return True
 # =====================================================================@001313=
 # 3. podnaloga
 # Sestavite funkcijo `pravokotnik(krogi)`, ki poišče najmanjši pravokotnik,
@@ -29,15 +39,22 @@
 #     >>> pravokotnik([(0, 0, 1)]
 #     (-1, -1, 1, 1)
 # =============================================================================
-
-
-
-
-
-
-
-
-
+def pravokotnik(krogi):
+    x_min = krogi[0][0] - krogi[0][2]
+    x_max = krogi[0][0] + krogi[0][2]
+    y_min = krogi[0][1] - krogi[0][2]
+    y_max = krogi[0][1] + krogi[0][2]
+    for krog in krogi[1:]:
+        x, y, r = krog
+        if x - r < x_min:
+            x_min = x - r
+        if x + r > x_max:
+            x_max = x + r
+        if y - r < y_min:
+            y_min = y - r
+        if y + r > y_max:
+            y_max = y + r
+    return (x_min, y_min, x_max, y_max)
 
 
 
