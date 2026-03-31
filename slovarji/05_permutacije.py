@@ -12,7 +12,8 @@
 #     >>> slika({1: 3, 2: 4, 3: 2, 4: 1}, 1)
 #     3
 # =============================================================================
-
+def slika(permutacija, x):
+    return permutacija[x]
 # =====================================================================@001380=
 # 2. podnaloga
 # Sestavite funkcijo `slike(permutacija, x, n)`, ki vrne zaporedje slik, ki ga
@@ -21,7 +22,12 @@
 #     >>> slike({1: 3, 2: 4, 3: 2, 4: 1}, 1, 2)
 #     [1, 3, 2]
 # =============================================================================
-
+def slike(permutacija, x, n):
+    sez = [x]
+    for _ in range(n):
+        x = permutacija[x]
+        sez.append(x)
+    return sez
 # =====================================================================@001381=
 # 3. podnaloga
 # Sestavite funkcijo `cikel(permutacija, x)`, ki vrne celoten cikel, ki se
@@ -32,7 +38,12 @@
 #     >>> cikel({1: 3, 2: 2, 3: 1}, 2)
 #     [2]
 # =============================================================================
-
+def cikel(permutacija, x):
+    sez = [x]
+    while permutacija[x] != sez[0]:
+        x = permutacija[x]
+        sez.append(x)
+    return sez
 # =====================================================================@001382=
 # 4. podnaloga
 # Sestavite funkcijo `cikli`, ki vrne seznam disjunktnih ciklov dane
@@ -42,7 +53,15 @@
 #     >>> cikli({1: 3, 2: 2, 3: 1})
 #     [[1, 3], [2]]
 # =============================================================================
-
+def cikli(permutacija):
+    cikli = []
+    uporabljeni = set()
+    for stevilo in range(1, len(permutacija) + 1):
+        if stevilo not in uporabljeni:
+            c = cikel(permutacija, stevilo)
+            cikli.append(c)
+            uporabljeni.update(c)
+    return cikli
 # =====================================================================@001383=
 # 5. podnaloga
 # Sestavite funkcijo `je_permutacija`, ki vrne `True`, če dani slovar
@@ -53,7 +72,12 @@
 #     >>> je_permutacija({1: 3, 2: 4})
 #     False
 # =============================================================================
-
+def je_permutacija(permutacija):
+    n = len(permutacija)
+    kljuci = set(permutacija.keys()) 
+    vrednosti = set(permutacija.values()) 
+    return kljuci == vrednosti == set(range(1, n + 1))
+    
 
 
 

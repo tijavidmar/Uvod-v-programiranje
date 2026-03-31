@@ -18,7 +18,11 @@
 #     >>> druzinski_clani({"mami": "pita", "ati": "torta"})
 #     ['mami', 'ati']
 # =============================================================================
-
+def druzinski_clani(sez):
+    clani = []
+    for kljuc in sez:
+        clani.append(kljuc)
+    return clani
 # =====================================================================@020338=
 # 2. podnaloga
 # Vaša boljša polovica si je izpogajala, da bo na tokratni družinski piknik
@@ -32,7 +36,14 @@
 #                            {"brat Jan": "cokolada", "mami": "piskoti"})
 #     {'mami': 'pita', 'ati': 'torta', 'brat Jan': 'cokolada'}
 # =============================================================================
-
+def zdruzi_sladkosnede(domaci, njihovi):
+    slovar ={}
+    for clan in domaci:
+        slovar[clan] = domaci[clan]
+    for clan2 in njihovi:
+        if clan2 not in slovar:
+            slovar[clan2] = njihovi[clan2]
+    return slovar
 # =====================================================================@020339=
 # 3. podnaloga
 # Od babice Minke ste dobili seznam gostov, ki so potrdili udeležbo na pikniku. 
@@ -45,6 +56,15 @@
 #     >>> nakupovalni_seznam({"mami": "pita", "ati": "torta"}, ["mami", "brat"])
 #     {'pita': 1}
 # =============================================================================
+def nakupovalni_seznam(sladkosnedi, gosti):
+    sladice = {}
+    for clan, sladica in sladkosnedi.items():
+        if clan in gosti:
+            if sladica in sladice:
+                sladice[sladica] += 1
+            else:
+                sladice[sladica] = 1
+    return sladice
 
 
 

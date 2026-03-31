@@ -24,7 +24,11 @@
 #     >>> sifriraj(nasa_sifra, 'MATEMATIK')
 #     'UOČVUOČBI'
 # =============================================================================
-
+def sifriraj(sifra, beseda):
+    rezultat = ""
+    for crka in beseda:
+        rezultat += sifra[crka]
+    return rezultat
 # =====================================================================@001389=
 # 2. podnaloga
 # Sestavite funkcijo `ali_je_sifra`, ki ugotovi, ali dani slovar predstavlja
@@ -35,7 +39,12 @@
 #     >>> ali_je_sifra({'A': 'B', 'B': 'C'})
 #     False
 # =============================================================================
-
+def ali_je_sifra(sifra):
+    je_sifra = True
+    for crka in sifra:
+        if crka not in sifra.values():
+            je_sifra = False
+    return je_sifra
 # =====================================================================@001390=
 # 3. podnaloga
 # Sestavite funkcijo `inverz`, ki vrne inverz dane šifre, če ta obstaja. V
@@ -44,7 +53,13 @@
 #     >>> inverz({'A': 'B', 'B': 'C', 'C': 'A'})
 #     {'A': 'C', 'B': 'A', 'C': 'B'}
 # =============================================================================
-
+def inverz(sifra):
+    if not ali_je_sifra(sifra):
+        return None
+    inverz = {}
+    for crka, geslo in sifra.items():
+        inverz[geslo] = crka
+    return inverz
 # =====================================================================@001391=
 # 4. podnaloga
 # Sestavite funkcijo `odsifriraj`, ki sprejme šifro in zašifrirano besedilo,
@@ -54,7 +69,11 @@
 #     >>> odsifriraj(nasa_sifra, 'MVCOI')
 #     'BEDAK'
 # =============================================================================
-
+def odsifriraj(sifra, besedilo):
+    nova_sifra = inverz(sifra)
+    if nova_sifra is None:
+        return None
+    return sifriraj(nova_sifra, besedilo)
 
 
 

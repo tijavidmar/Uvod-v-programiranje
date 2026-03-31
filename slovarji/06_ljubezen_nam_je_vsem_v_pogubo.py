@@ -20,13 +20,22 @@
 # Sestavite funkcijo `narcisoidi`, ki sprejme slovar zaljubljenih in vrne
 # _množico_ tistih, ki ljubijo same sebe.
 # =============================================================================
-
+def narcisoidi(seznam):
+    narcisoid = set() 
+    for oseba, ljubezni in seznam.items():
+        if oseba in ljubezni:
+            narcisoid.add(oseba)
+    return narcisoid
 # =====================================================================@001385=
 # 2. podnaloga
 # Sestavite funkcijo `ljubljeni`, ki sprejme slovar zaljubljenih in vrne
 # _množico_ tistih, ki so ljubljeni.
 # =============================================================================
-
+def ljubljeni(slovar):
+    mnozica = set()
+    for ljubezni in slovar.values():
+        mnozica.update(ljubezni)
+    return mnozica
 # =====================================================================@001386=
 # 3. podnaloga
 # Sestavite funkcijo `pari`, ki sprejme slovar zaljubljenih in vrne _množico_
@@ -34,7 +43,13 @@
 # sicer tako, da sta zaljubljenca našteta po abecedi. Na primer, če sta Ana in
 # Bine zaljubljena, dodamo par `('Ana', 'Bine')`.
 # =============================================================================
-
+def pari(slovar):
+    par = set() 
+    for oseba, ljubezni in slovar.items():
+        for oseba2 in ljubezni:
+            if oseba2 in slovar and oseba in slovar[oseba2]:
+                par.add(tuple(sorted([oseba, oseba2])))
+    return par
 # =====================================================================@001387=
 # 4. podnaloga
 # Sestavite funkcijo `ustrezljivi(oseba, zaljubljeni)`, ki sprejme ime osebe
@@ -56,7 +71,18 @@
 # so do Ceneta posebej ustrežljivi Ana (ki je zaljubljena vanj), Bine (ki je
 # zaljubljen v Ano) ter Cene in Eva (ki sta zaljubljena v Bineta).
 # =============================================================================
-
+def ustrezljivi(oseba, zaljubljeni):
+    mnozica = set()
+    preverjamo = {oseba}
+    while preverjamo != set():
+        dodajamo = set() 
+        for clovek1 in preverjamo:
+            for clovek2 in zaljubljeni:
+                if clovek1 in zaljubljeni[clovek2] and clovek2 not in mnozica:
+                    dodajamo.add(clovek2)
+        mnozica.update(dodajamo)
+        preverjamo = dodajamo
+    return mnozica
 
 
 

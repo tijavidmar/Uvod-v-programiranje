@@ -12,7 +12,11 @@
 #     >>> pomnozi({'jajca': 4, 'moka': 500}, 2)
 #     {'jajca': 8, 'moka': 1000}
 # =============================================================================
-
+def pomnozi(recept, n):
+    nov = {}
+    for sestavina, kolicina in recept.items():
+        nov[sestavina] = n * kolicina
+    return nov
 # =====================================================================@001393=
 # 2. podnaloga
 # Sestavite funkcijo `ali_imamo_sestavine(recept, shramba)`, ki preveri, ali
@@ -24,7 +28,13 @@
 #     >>> ali_imamo_sestavine({'jajca': 3, 'moka': 500}, {'moka': 1000, 'sladkor': 1000})
 #     False
 # =============================================================================
-
+def ali_imamo_sestavine(recept, shramba):
+    for sestavina, kolicina in recept.items():
+        if sestavina not in shramba:
+            return False
+        if shramba[sestavina] < kolicina:
+            return False
+    return True
 # =====================================================================@001394=
 # 3. podnaloga
 # Sestavite funkcijo `kaj_moramo_se_kupiti(recept, shramba)`, ki vrne slovar
@@ -38,7 +48,15 @@
 #     >>> kaj_moramo_se_kupiti({'jajca': 3, 'moka': 500}, {'moka': 100})
 #     {'jajca': 3, 'moka': 400}
 # =============================================================================
-
+def kaj_moramo_se_kupiti(recept, shramba):
+    seznam = {}
+    for sestavina, kolicina in recept.items():
+        if sestavina not in shramba:
+            seznam[sestavina] = kolicina
+        else:
+            if shramba[sestavina] < kolicina:
+                seznam[sestavina] = kolicina - shramba[sestavina]
+    return seznam
 
 
 
