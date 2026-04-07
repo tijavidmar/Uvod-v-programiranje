@@ -10,7 +10,8 @@
 #     >>> poudari("Zadnja novica")
 #     "Z A D N J A   N O V I C A"
 # =============================================================================
-
+def poudari(naslov):
+    return " ".join(naslov.upper())
 # =====================================================================@001464=
 # 2. podnaloga
 # Sestavite funkcijo `poudari_besede(naslov)`, ki vrne naslov, v katerem
@@ -19,8 +20,17 @@
 #     >>> poudari_besede("Zadnja *novica* danes!")
 #     "Zadnja NOVICA danes!"
 # =============================================================================
-
-
+def poudari_besede(naslov):
+    poudarjen = ''
+    poudarjaj = False
+    for z in naslov:
+        if z == "*":
+            poudarjaj = not poudarjaj
+        elif poudarjaj:
+            poudarjen += z.upper()
+        else:
+            poudarjen += z
+    return poudarjen
 
 
 

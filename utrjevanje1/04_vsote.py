@@ -8,7 +8,11 @@
 #     >>> vsota_kvadratov(10)
 #     385
 # =============================================================================
-
+def vsota_kvadratov(n):
+    vsota = 0
+    for i in range(n + 1):
+        vsota += i ** 2
+    return vsota
 # =====================================================================@001475=
 # 2. podnaloga
 # Sestavite funkcijo `vsota_produktov_sosednjih(n)`, ki izračuna in vrne vsoto
@@ -17,7 +21,11 @@
 #     >>> vsota_produktov_sosednjih(10)
 #     440
 # =============================================================================
-
+def vsota_produktov_sosednjih(n):
+    vsota = 0
+    for i in range(1, n + 1):
+        vsota += i * (i + 1)
+    return vsota
 # =====================================================================@001476=
 # 3. podnaloga
 # Sestavite funkcijo `stevilo_clenov(m)`, ki izračuna, največ koliko členov
@@ -28,7 +36,13 @@
 #     >>> stevilo_clenov(20)
 #     3
 # =============================================================================
-
+def stevilo_clenov(m):
+    vsota = 0
+    i = 0
+    while vsota + (i + 1) * (i + 2) <= m:
+        i += 1
+        vsota += i * (i + 1)
+    return i
 # =====================================================================@001477=
 # 4. podnaloga
 # Sestavite funkcijo `najblizje(a, b, m)`, ki poišče takšno število `k`
@@ -40,7 +54,20 @@
 #     >>> najblizje(10, 20, 10000)
 #     14
 # =============================================================================
-
+def najblizje(a, b, m):
+    najboljsi_k = a
+    najmanjsa_razlika = float("inf")
+    for k in range(a, b + 1):
+        vsota = 0
+        i = k
+        while vsota < m:
+            vsota += i * (i + 1)
+            i += 1
+        razlika = abs(m - vsota)
+        if razlika < najmanjsa_razlika:
+            najmanjsa_razlika = razlika
+            najboljsi_k = k
+    return najboljsi_k
 
 
 

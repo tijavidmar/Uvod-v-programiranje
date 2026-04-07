@@ -8,7 +8,8 @@
 #     >>> ravninska_razdalja(1, 2, 3, 4)
 #     2.82842712475
 # =============================================================================
-
+def ravninska_razdalja(x1, y1, x2, y2):
+    return ((x1 - x2) ** 2 + (y1 - y2) ** 2 ) ** (1 / 2)
 # =====================================================================@027817=
 # 2. podnaloga
 # Sestavite funkcijo `polarna_razdalja(r1, fi1, r2, fi2)`, ki vrne
@@ -18,6 +19,15 @@
 #     >>> polarna_razdalja(1, 30, 4, 90)
 #     3.60555127546
 # =============================================================================
+def polarna_razdalja(r1, fi1, r2, fi2):
+    import math
+    fi1 = math.radians(fi1)
+    fi2 = math.radians(fi2)
+    x1 = r1 * math.cos(fi1)
+    y1 = r1 * math.sin(fi1)
+    x2 = r2 * math.cos(fi2)
+    y2 = r2 * math.sin(fi2)
+    return ravninska_razdalja(x1, y1, x2, y2)
 
 
 

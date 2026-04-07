@@ -23,7 +23,25 @@
 #     >>> cik_cak('Attack at dawn!')
 #     ('A...C...D...', '.T.A.K.T.A.N', '..T...A...W.')
 # =============================================================================
-
+def cik_cak(niz):
+    crke = [c for c in niz.upper() if c.isalpha()]
+    niz1 = "" 
+    niz2 = "" 
+    niz3 = ""
+    for i in range(len(crke)):
+        if i % 4 == 0:
+            niz1 += crke[i]
+        else: 
+            niz1 += "."
+        if i % 2 != 0:
+            niz2 += crke[i]
+        else:
+            niz2 += "."
+        if i % 2 == 0 and i % 4 != 0:
+            niz3 += crke[i]
+        else:
+            niz3 += "."
+    return (niz1, niz2, niz3)
 # =====================================================================@001493=
 # 2. podnaloga
 # Zašifrirano besedilo dobi tako, da najprej prepiše vse znake iz prve
@@ -35,7 +53,14 @@
 #     >>> cik_cak_sifra('Attack at dawn!')
 #     'ACDTAKTANTAW'
 # =============================================================================
-
+def cik_cak_sifra(niz):
+    sifra = cik_cak(niz)
+    niz1 = sifra[0] + sifra[1] + sifra[2]
+    nov = ""
+    for crka in niz1:
+        if crka != ".":
+            nov += crka
+    return nov
 # =====================================================================@001494=
 # 3. podnaloga
 # Klodovik se zelo razjezi, ko dobi elektronsko pošto v takšni obliki:
@@ -62,7 +87,8 @@
 #     >>> razrez('   Kakšen\t pastir, \n\ntakšna  čreda. ')
 #     ['Kakšen', 'pastir,', 'takšna', 'čreda.']
 # =============================================================================
-
+def razrez(niz):
+    return niz.split()
 # =====================================================================@001495=
 # 4. podnaloga
 # Sedaj, ko že imate funkcijo `razrez`, bo lažje napisati tisto funckijo, ki
@@ -90,7 +116,27 @@
 #     pa je oblačno in
 #     temno, žita ne bo.
 # =============================================================================
-
+def olepsanoBesedilo(s, sir):
+    besede = razrez(s)
+    vrstice = []
+    trenutna = ""
+    
+    for beseda in besede:
+        if trenutna == "":
+            # prva beseda v vrstici
+            trenutna = beseda
+        elif len(trenutna) + 1 + len(beseda) <= sir:
+            # dodamo besedo z enim presledkom
+            trenutna += " " + beseda
+        else:
+            # vrstica je polna, začnemo novo
+            vrstice.append(trenutna)
+            trenutna = beseda
+    
+    if trenutna:
+        vrstice.append(trenutna)
+    
+    return "\n".join(vrstice)
 
 
 

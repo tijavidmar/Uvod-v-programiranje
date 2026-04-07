@@ -28,7 +28,11 @@
 #     >>> prvi_samoglasnik('Krščen matiček!')
 #     4
 # =============================================================================
-
+def prvi_samoglasnik(niz):
+    for i in range(len(niz)):
+        if niz[i] in "aeiouAEIOU":
+            return i
+    return -1
 # =====================================================================@024226=
 # 2. podnaloga
 # Napišite funkcijo `disemvowel(sporocilo)`, ki kot argument prejme niz
@@ -38,7 +42,15 @@
 #     >>> disemvowel('Banana je dobra!')
 #     'Bnn j dbr!aaaeoa'
 # =============================================================================
-
+def disemvowel(sporocilo):
+    nov = ""
+    samoglasniki = ""
+    for znak in sporocilo:
+        if znak in "aeiouAEIOU":
+            samoglasniki += znak
+        else:
+            nov += znak
+    return nov + samoglasniki
 # =====================================================================@024227=
 # 3. podnaloga
 # Včasih pa želimo sporočilo dešifrirati, saj nas zanima njegova vsebina.
@@ -57,11 +69,20 @@
 #     >>> razveljavi_disemvowel('B*n*n* j* d*br*!aaaeoa')
 #     'Banana je dobra!'
 # =============================================================================
-
-
-
-
-
+def razveljavi_disemvowel(niz):
+    nov = ""
+    samoglasniki = niz[prvi_samoglasnik(niz):]
+    i = 0
+    if prvi_samoglasnik(niz) == -1:
+        return niz
+    else:
+        for znak in niz[:prvi_samoglasnik(niz)]:
+            if znak == "*":
+                nov += samoglasniki[i] 
+                i += 1
+            else:
+                nov += znak
+        return nov
 
 
 

@@ -46,7 +46,21 @@
 # _Opomba_: Kot je za Python običajno, se stolpci in vrstice začnejo
 # številčiti pri 0.
 # =============================================================================
-
+def zivi(svet, i, j):
+    stevilo = 0
+    vrstice = len(svet)
+    stolpci = len(svet[0])
+    
+    for di in [-1, 0, 1]:
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:
+                continue  # preskočimo samo celico (i,j)
+            ni = i + di
+            nj = j + dj
+            if 0 <= ni < vrstice and 0 <= nj < stolpci:
+                if svet[ni][nj]:
+                    stevilo += 1
+    return stevilo
 # =====================================================================@027814=
 # 2. podnaloga
 # Napišite funkcijo `igra(svet)`, ki sestavi in vrne matriko, ki
@@ -63,7 +77,29 @@
 #      [False, False, False, False, False, False],
 #      [False, False, False, False, False, False]]
 # =============================================================================
-
+def igra(svet):
+    vrstice = len(svet)
+    stolpci = len(svet[0])
+    nov = []
+    
+    for i in range(vrstice):
+        vrstica = []
+        for j in range(stolpci):
+            sosedi = zivi(svet, i, j)
+            if svet[i][j]:
+                # živa celica
+                if sosedi < 2 or sosedi > 3:
+                    vrstica.append(False)  # umre
+                else:
+                    vrstica.append(True)   # preživi
+            else:
+                # mrtva celica
+                if sosedi == 3:
+                    vrstica.append(True)   # oživi
+                else:
+                    vrstica.append(False)  # ostane mrtva
+        nov.append(vrstica)
+    return nov
 # =====================================================================@027815=
 # 3. podnaloga
 # Napišite funkcijo `populacija(svet, n)`, ki naredi `n` korakov igre
@@ -96,7 +132,21 @@
 # _Nasvet_: Najprej napišite pomožno funkcijo, ki prešteje število živih
 # celic v matriki.
 # =============================================================================
+def vsota(svet):
+    s = 0
+    for i in range(len(svet)):
+        for j in range(len(svet[0])):
+            if svet[i][j]:
+                s += 1
+    return s
 
+def populacija(svet, n):
+    sez = [vsota(svet)]  
+    trenutni = [row[:] for row in svet] 
+    for _ in range(n):
+        trenutni = igra(trenutni) 
+        sez.append(vsota(trenutni))
+    return sez
 
 
 
