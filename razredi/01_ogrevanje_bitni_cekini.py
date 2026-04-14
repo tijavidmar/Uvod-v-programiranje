@@ -16,7 +16,9 @@
 # Argument `stanje` naj bo neobvezen in v primeru, ko ni podan, naj bo
 # začetno stanje enako nič.
 # =============================================================================
-
+class BitniCekin:
+    def __init__(self, stanje=0):
+        self.stanje = stanje
 # =====================================================================@001713=
 # 2. podnaloga
 # Sestavite metodo `__str__(self)`, ki predstavi stanje na računu v obliki:
@@ -32,7 +34,8 @@
 # in izpiše niz, ki ga ta metoda vrne. Metoda `__str__` običajno vrne
 # razumljiv opis objekta, ki naj bi ga razumeli tudi ne-programerji.
 # =============================================================================
-
+    def __str__(self):
+        return f"Število bitnih cekinov na računu: {self.stanje}"
 # =====================================================================@001714=
 # 3. podnaloga
 # Sestavite še metodo `__repr__`, ki predstavi objekt z nizom
@@ -49,7 +52,8 @@
 # niz, ki ga vrne metoda `__repr__`, veljavna programska koda v Pythonu, ki
 # ustvari identično kopijo objekta.
 # =============================================================================
-
+    def __repr__(self):
+        return f"BitniCekin({self.stanje})"
 # =====================================================================@001715=
 # 4. podnaloga
 # Sestavite metodi `dvig(self, koliko)` in `polog(self, koliko)`, ki
@@ -63,7 +67,16 @@
 # Metoda `dvig` naj vrne `True`, če je dvig uspel in `False`, če ni.
 # Metoda `polog` naj vrne stanje na računu po pologu.
 # =============================================================================
-
+    def dvig(self, koliko):
+        if koliko <= self.stanje:
+            self.stanje -= koliko
+            return True
+        else:
+            return False
+        
+    def polog(self, koliko):
+        self.stanje += koliko
+        return self.stanje
 # =====================================================================@001716=
 # 5. podnaloga
 # Sestavite funkcijo `prenesi(racun1, racun2, koliko)`, ki iz računa `racun1`
@@ -76,7 +89,13 @@
 # Funkcija naj vrne uspešnost transakcije (`True`, če je transakcija uspela,
 # in `False`, če ni).
 # =============================================================================
-
+def prenesi(racun1, racun2, koliko):
+    if racun1.stanje < koliko:
+        return False
+    else:
+        racun2.stanje += koliko
+        racun1.stanje -= koliko
+        return True
 
 
 

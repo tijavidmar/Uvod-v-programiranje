@@ -19,7 +19,11 @@
 #     >>> a.matrika 
 #     [[1], [2]]
 # =============================================================================
-
+class Matrika:
+    def __init__(self, seznam):
+        self.matrika = [vrstica[:] for vrstica in seznam]
+        self.visina = len(seznam)
+        self.sirina = len(seznam[0]) 
 # =====================================================================@027763=
 # 2. podnaloga
 # Definirajte metodo `__eq__(self, other)`, ki preveri, ali sta matriki enaki. 
@@ -29,7 +33,8 @@
 #     >>> Matrika([[1], [2]]) == Matrika([[1], [2], [3]])
 #     False
 # =============================================================================
-
+    def __eq__(self, other):
+        return self.matrika == other.matrika
 # =====================================================================@027764=
 # 3. podnaloga
 # Definirajte metodo `__str__(self)`, ki na lep način izpiše matriko. Vsaka vrstica naj 
@@ -42,7 +47,13 @@
 #     1, 2
 #     222, 1
 # =============================================================================
+    def __str__(self):
+        vrstice = []
 
+        for vrstica in self.matrika:
+            vrstice.append(", ".join(str(x) for x in vrstica))
+
+        return "\n".join(vrstice)
 # =====================================================================@027765=
 # 4. podnaloga
 # Definirajte metodo `__add__(self, other)`, ki naj implementira običajno matrično 
@@ -59,7 +70,14 @@
 #     >>> print(Matrika([[1, 2, 3]]) + Matrika([[1, 2, 3]]))
 #     2 4 6
 # =============================================================================
-
+    def __add__(self, other):
+        vsota = []
+        for i in range(self.visina):
+            vrstica = []
+            for j in range(self.sirina):
+                vrstica.append(self.matrika[i][j] + other.matrika[i][j])
+            vsota.append(vrstica)
+        return Matrika(vsota)
 # =====================================================================@027766=
 # 5. podnaloga
 # Definirajte metodo `__mul__(self, other)`, ki implementira množenje istoležnih 
@@ -69,9 +87,14 @@
 #     -1
 #     4
 # =============================================================================
-
-
-
+    def __mul__(self, other):
+        nova = []
+        for i in range(self.visina):
+            vrstica = []
+            for j in range(self.sirina):
+                vrstica.append(self.matrika[i][j] * other.matrika[i][j])
+            nova.append(vrstica)
+        return Matrika(nova)
 
 
 

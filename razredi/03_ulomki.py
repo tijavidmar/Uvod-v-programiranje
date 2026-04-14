@@ -8,7 +8,10 @@
 #     >>> gcd(35, 63)
 #     7
 # =============================================================================
-
+def gcd(m, n):
+    while n != 0:
+        m, n = n, m % n
+    return m
 # =====================================================================@001732=
 # 2. podnaloga
 # Definirajte razred `Ulomek`, s katerim predstavimo ulomek. Števec in
@@ -24,7 +27,18 @@
 #     >>> u.im
 #     4
 # =============================================================================
+class Ulomek:
+    def __init__(self, st, im):
+        d = gcd(st, im)
+        st //= d
+        im //= d
 
+        if im < 0:
+            st = -st
+            im = -im
+
+        self.st = st
+        self.im = im
 # =====================================================================@001733=
 # 3. podnaloga
 # Definirajte metodo  `__str__`, ki predstavi ulomek z nizom
@@ -34,7 +48,8 @@
 #     >>> print(u)
 #     1/4
 # =============================================================================
-
+    def __str__(self):
+        return f"{self.st}/{self.im}"
 # =====================================================================@001734=
 # 4. podnaloga
 # Definirajte še metodo  `__repr__`, ki predstavi ulomek z nizom
@@ -44,7 +59,8 @@
 #     >>> u
 #     Ulomek(1, 4)
 # =============================================================================
-
+    def __repr__(self):
+        return f"Ulomek({self.st}, {self.im})"
 # =====================================================================@001735=
 # 5. podnaloga
 # Definirajte metodo  `__eq__(self, other)`, ki vrne `True` če sta dva
@@ -55,7 +71,11 @@
 #     >>> Ulomek(2, 3) == Ulomek(10, 15)
 #     True
 # =============================================================================
-
+    def __eq__(self, other):
+        if self.st == other.st and self.im == other.im:
+            return True
+        else:
+            return False
 # =====================================================================@001736=
 # 6. podnaloga
 # Definirajte metodo  `__add__(self, other)`, ki vrne vsoto dveh ulomkov.
@@ -65,7 +85,8 @@
 #     >>> Ulomek(1, 6) + Ulomek(1, 4)
 #     Ulomek(5, 12)
 # =============================================================================
-
+    def __add__(self, other):
+        return Ulomek(self.st * other.im + other.st * self.im, self.im * other.im)
 # =====================================================================@001737=
 # 7. podnaloga
 # Definirajte metodo  `__sub__`, ki vrne razliko dveh ulomkov.
@@ -75,7 +96,8 @@
 #     >>> Ulomek(1, 4) - Ulomek(1, 6)
 #     Ulomek(1, 12)
 # =============================================================================
-
+    def __sub__(self, other):
+        return Ulomek(self.st * other.im - other.st * self.im, self.im * other.im)
 # =====================================================================@001738=
 # 8. podnaloga
 # Definirajte metodo  `__mul__`, ki vrne zmnožek dveh ulomkov.
@@ -85,7 +107,8 @@
 #     >>> Ulomek(1, 3) * Ulomek(1, 2)
 #     Ulomek(1, 6)
 # =============================================================================
-
+    def __mul__(self, other):
+        return Ulomek(self.st * other.st, self.im * other.im)
 # =====================================================================@001739=
 # 9. podnaloga
 # Definirajte metodo  `__truediv__`, ki vrne kvocient dveh
@@ -95,7 +118,8 @@
 #     >>> Ulomek(1, 6) / Ulomek(1, 4)
 #     Ulomek(2, 3)
 # =============================================================================
-
+    def __truediv__(self, other):
+        return Ulomek(self.st * other.im, self.im * other.st)
 # =====================================================================@001740=
 # 10. podnaloga
 # Izven razreda `Ulomek` definirajte funkcijo `priblizek(n)`, ki vrne
@@ -107,8 +131,13 @@
 # 
 # Ali je izračunana vrednost blizu števila $e$?
 # =============================================================================
-
-
+def priblizek(n):
+    vsota = Ulomek(0, 1)
+    imenovalec = 1
+    for i in range(n + 1):
+        vsota += Ulomek(1, imenovalec)
+        imenovalec *= (i + 1)
+    return vsota
 
 
 

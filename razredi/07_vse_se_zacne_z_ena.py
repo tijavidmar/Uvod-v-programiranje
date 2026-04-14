@@ -16,7 +16,19 @@
 #     >>> [next(g) for i in range(5)]
 #     ['1', '11', '21', '1211', '111221']
 # =============================================================================
-
+def poglej_in_povej():
+    trenutni = "1"
+    while True:
+        yield trenutni
+        naslednji = ""
+        i = 0
+        while i < len(trenutni):
+            count = 1
+            while i + count < len(trenutni) and trenutni[i] == trenutni[i + count]:
+                count += 1
+            naslednji += str(count) + trenutni[i]
+            i += count
+        trenutni = naslednji
 # =====================================================================@001929=
 # 2. podnaloga
 # Oglejmo si zaporedje
@@ -34,23 +46,18 @@
 #     >>> [next(g) for x in range(20)]
 #     [1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1, 5, 1, 2, 1, 3]
 # =============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def ravnilo():
+    i = 1
+    while True:
+        yield prva_enka_v_dvojiskem(i)
+        i += 1
+        
+def prva_enka_v_dvojiskem(n):
+    stevec = 1
+    while n % 2 == 0:
+        n = n // 2
+        stevec += 1
+    return stevec
 
 
 

@@ -8,7 +8,10 @@
 #     >>> [x for x in stevke(1337)]
 #     [7, 3, 3, 1]
 # =============================================================================
-
+def stevke(n):
+    while n > 0:
+        yield n % 10
+        n //= 10
 # =====================================================================@001931=
 # 2. podnaloga
 # Sestavite generator `potence_naravnih(k)`, ki kot argument dobi število
@@ -18,7 +21,11 @@
 #     >>> [next(g) for i in range(10)]
 #     [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 # =============================================================================
-
+def potence_naravnih(k):
+    stevilo = 1
+    while True:
+        yield stevilo ** k
+        stevilo += 1
 # =====================================================================@001932=
 # 3. podnaloga
 # Sestavite generator `fakultete(n)`, ki kot argument dobi nenegativno
@@ -28,7 +35,14 @@
 #     >>> [next(g) for i in range(10)]
 #     [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
 # =============================================================================
-
+def fakultete(n):
+    f = 1
+    for i in range(1, n + 1):
+        f *= i
+    while True:
+        yield f
+        n += 1
+        f *= n
 # =====================================================================@001933=
 # 4. podnaloga
 # Spomnimo se, da je Collatzovo zaporedje z začetnim členom $a_0$ definirano
@@ -42,7 +56,14 @@
 #     >>> [x for x in collatz(20)]
 #     [20, 10, 5, 16, 8, 4, 2, 1]
 # =============================================================================
-
+def collatz(n):
+    yield n
+    while n != 1:
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+        yield n
 # =====================================================================@001934=
 # 5. podnaloga
 # Sestavite generator `delitelji`, ki kot argument dobi naravno število
@@ -51,7 +72,12 @@
 #     >>> [x for x in delitelji(12)]
 #     [1, 2, 3, 4, 6, 12]
 # =============================================================================
-
+def delitelji(n):
+    d = 1
+    while d <= n:
+        if n % d == 0:
+            yield d
+        d += 1
 # =====================================================================@001935=
 # 6. podnaloga
 # Sestavite generator `ucinkoviti_delitelji`, ki deluje tako kot generator
@@ -62,9 +88,18 @@
 # 
 #     ucinkoviti_delitelji = delitelji
 # =============================================================================
-
-
-
+def ucinkoviti_delitelji(n):
+    mali = []
+    veliki = []
+    d = 1
+    while d * d <= n:
+        if n % d == 0:
+            yield d
+            if d != n // d:
+                veliki.append(n // d)
+        d += 1
+    for x in reversed(veliki):
+        yield x
 
 
 

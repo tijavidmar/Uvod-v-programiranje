@@ -28,7 +28,11 @@
 #     >>> p.koef
 #     [2, 0, 1]
 # =============================================================================
-
+class Polinom:
+    def __init__(self, koef):
+        self.koef = koef[:]
+        while len(self.koef) > 0 and self.koef[-1] == 0:
+            self.koef.pop()
 # =====================================================================@001742=
 # 2. podnaloga
 # Sestavite metodo `stopnja`, ki vrne stopnjo polinoma. Zgled:
@@ -40,7 +44,10 @@
 # _Opomba_: Za razpravo glede stopnje ničelnega polinoma glejte [članek
 # na Wikipediji](http://en.wikipedia.org/wiki/Degree_of_a_polynomial#Degree_of_the_zero_polynomial).
 # =============================================================================
-
+    def stopnja(self):
+        if len(self.koef) == 0:
+            return float("-inf")
+        return len(self.koef) - 1
 # =====================================================================@001743=
 # 3. podnaloga
 # Sestavite metodo `__repr__`, ki vrne niz oblike
@@ -51,7 +58,8 @@
 #     >>> p
 #     Polinom([5, 0, 1])
 # =============================================================================
-
+    def __repr__(self):
+        return f"Polinom({self.koef})"
 # =====================================================================@001744=
 # 4. podnaloga
 # Sestavite metodo `__eq__(self, other)` za primerjanje polinomov. Zgled:
@@ -61,7 +69,8 @@
 #     >>> Polinom([3, 2, 1, 0]) == Polinom([3, 2, 1])
 #     True
 # =============================================================================
-
+    def __eq__(self, other):
+        return self.koef == other.koef
 # =====================================================================@001745=
 # 5. podnaloga
 # Sestavite metodo `__call__(self, x)`, ki izračuna in vrne vrednost
@@ -77,7 +86,11 @@
 #     >>> p(0.725)
 #     4.8310781249999994
 # =============================================================================
-
+    def __call__(self, x):
+        rezultat = 0
+        for k in reversed(self.koef):
+            rezultat = rezultat * x + k
+        return rezultat
 # =====================================================================@001746=
 # 6. podnaloga
 # Sestavite metodo `__add__(self, other)` za seštevanje polinomov. Metoda
@@ -90,7 +103,14 @@
 # _Pozor_: Pri seštevanju se lahko zgodi, da se nekateri koeficienti
 # pokrajšajo: $(x^3 + 2x + 7) + (-x^3 - 2x + 10) = 17$.
 # =============================================================================
-
+    def __add__(self, other):
+        max_len = max(len(self.koef), len(other.koef))
+        novi = []
+        for i in range(max_len):
+            a = self.koef[i] if i < len(self.koef) else 0
+            b = other.koef[i] if i < len(other.koef) else 0
+            novi.append(a + b)
+        return Polinom(novi)
 # =====================================================================@001747=
 # 7. podnaloga
 # Sestavite metodo `__mul__` za množenje polinomov. Metoda
@@ -100,7 +120,12 @@
 #     >>> Polinom([1, 0, 1]) * Polinom([4, 2])
 #     Polinom([4, 2, 4, 2])
 # =============================================================================
-
+    def __mul__(self, other):
+        rezultat = [0] * (len(self.koef) + len(other.koef) - 1)
+        for i in range(len(self.koef)):
+            for j in range(len(other.koef)):
+                rezultat[i + j] += self.koef[i] * other.koef[j]
+        return Polinom(rezultat)
 # =====================================================================@001748=
 # 8. podnaloga
 # Sestavite metodo `odvod(self, k)`, sestavi in vrne nov polinom, ki bo
@@ -113,7 +138,15 @@
 #     >>> p.odvod(2)
 #     Polinom([8, -18, 60, -20])
 # =============================================================================
+    def odvod(self, k=1):
+        koef = self.koef[:]
+        for _ in range(k):
+            novi = []
+            for i in range(1, len(koef)):
+                novi.append(i * koef[i])
+            koef = novi
 
+        return Polinom(koef)
 # =====================================================================@001749=
 # 9. podnaloga
 # Sestavite metodo `__str__`, ki predstavi polinom v čitljivi obliki,
@@ -138,6 +171,27 @@
 # * Če je koeficient 0, bomo monom izpustili. To pravilo ne velja za
 #   ničelni polinom.
 # =============================================================================
+    def __str__(self):
+        if len(self.koef) == 0:
+            return "0"
+        deli = []
+
+        for i in range(len(self.koef) - 1, -1, -1):
+            a = self.koef[i]
+            if a == 0:
+                continue
+            if i == 0:
+                izraz = f"{abs(a)}"
+            elif i == 1:
+                izraz = "x" if abs(a) == 1 else f"{abs(a)}x"
+            else:
+                izraz = f"x^{i}" if abs(a) == 1 else f"{abs(a)}x^{i}"
+            if len(deli) == 0:
+                deli.append(("-" if a < 0 else "") + izraz)
+            else:
+                deli.append((" - " if a < 0 else " + ") + izraz)
+
+        return "".join(deli)
 
 # =====================================================================@027731=
 # 10. podnaloga
@@ -154,13 +208,43 @@
 #     >>> list(p)
 #     >>> [(-1, 6), (5, 4), (-3, 3), (4, 2), (1, 1), (5, 0)]
 # =============================================================================
+    def __iter__(self):
+        self._i = len(self.koef) - 1
+        return self
+
+    def __next__(self):
+        while self._i >= 0:
+            k = self.koef[self._i]
+            e = self._i
+            self._i -= 1
+
+            if k != 0:
+                return (k, e)
+
+        raise StopIteration
 
 
 
 
 
+def monom(a, i):
+    if a == 0:
+        return ""
 
+    if a < 0:
+        predznak = "-"
+    else:
+        predznak = ""
+    a = abs(a)
 
+    if i == 0:
+        zapis = f"{a}"
+    elif i == 1:
+        zapis = "x" if a == 1 else f"{a}x"
+    else:
+        zapis = f"x^{i}" if a == 1 else f"{a}x^{i}"
+
+    return predznak + zapis
 
 
 

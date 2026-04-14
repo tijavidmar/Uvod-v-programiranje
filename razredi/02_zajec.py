@@ -11,7 +11,10 @@
 # ki predstavlja zajca z dano težo in starostjo. Vrednosti shranite v
 # atributa z imenoma `teza` in `starost`.
 # =============================================================================
-
+class Zajec:
+    def __init__(self, teza, starost):
+        self.teza = teza
+        self.starost = starost
 # =====================================================================@001707=
 # 2. podnaloga
 # Sestavite metodo `nahrani(self, hrana)`, kjer je argument `hrana` teža
@@ -23,7 +26,8 @@
 #     >>> z.teza
 #     5.6
 # =============================================================================
-
+    def nahrani(self, hrana):
+        self.teza += hrana * 0.3
 # =====================================================================@001708=
 # 3. podnaloga
 # Sestavite metodo `__str__(self)`, ki vrne predstavitev razreda `Zajec`
@@ -35,7 +39,8 @@
 #     >>> print(z)
 #     'Zajec težak 5 kg, star 2 let.'
 # =============================================================================
-
+    def __str__(self):
+        return f"Zajec težak {self.teza} kg, star {self.starost} let."
 # =====================================================================@001709=
 # 4. podnaloga
 # Sestavite še metodo `__repr__`, ki vrne predstavitev razreda
@@ -48,7 +53,8 @@
 #     >>> z
 #     Zajec(5, 2)
 # =============================================================================
-
+    def __repr__(self):
+        return f"Zajec({self.teza}, {self.starost})"
 # =====================================================================@001710=
 # 5. podnaloga
 # Sestavite metodo `__lt__(self, drugi)`, ki dva zajca primerja med sabo.
@@ -64,7 +70,13 @@
 #     >>> Zajec(4, 3) < Zajec(4, 2)
 #     False
 # =============================================================================
-
+    def __lt__(self, drugi):
+        if self.teza < drugi.teza:
+            return True
+        if self.teza == drugi.teza and self.starost < drugi.starost:
+            return True
+        else:
+            return False
 # =====================================================================@001711=
 # 6. podnaloga
 # Sestavite funkcijo `uredi(teze, starosti)`. Argumenta `teze` in `starosti`
@@ -83,9 +95,12 @@
 #     Zajec težak 4 kg, star 3 let.
 #     Zajec težak 5 kg, star 3 let.
 # =============================================================================
-
-
-
+def uredi(teze, starosti):
+    seznam = []
+    for i in range(len(teze)):
+        seznam.append(Zajec(teze[i], starosti[i]))
+    seznam.sort()
+    return seznam
 
 
 
