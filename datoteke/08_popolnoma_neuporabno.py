@@ -15,11 +15,10 @@
 # 
 # ni pravilna, saj izpiše le svojo prvo vrstico, ne pa tudi druge.
 # =============================================================================
+import inspect
 
-
-
-
-
+def izpisem_se():
+    print(inspect.getsource(izpisem_se))
 
 
 

@@ -1,0 +1,4 @@
+Peter Klepec,1,0,1,2,1,5
+Micka Kovac,0,3,2,2,3,10
+Janez Novak,1,3,3,2,0,9
+POVPRECEN STUDENT,0.67,2.00,2.00,2.00,1.33,8.00

@@ -24,7 +24,11 @@
 # Predpostavite lahko, da so vsi podatki razen prvega res števila. Ni pa nujno,
 # da imenu sledi natanko 5 števil.
 # =============================================================================
-
+def nabor(niz):
+    s = niz.split(',')
+    for i in range(1, len(s)):
+        s[i] = int(s[i])
+    return tuple(s)
 # =====================================================================@001519=
 # 2. podnaloga
 # Sestavite funkcijo `nalozi_csv`, ki kot parameter dobi ime datoteke, v kateri
@@ -43,7 +47,16 @@
 #     >>> nalozi_csv('kolokviji.txt')
 #     [('Janez Novak', 1, 3, 3, 0, 2), ('Peter Klepec', 1, 0, 1, 2, 1, 3), ('Drago Dragić', 7)]
 # =============================================================================
-
+def nalozi_csv(datoteka):
+    seznam = []
+    with open(datoteka, "r", encoding="utf-8") as dat:
+        vsebina = dat.read()
+        vsebina = vsebina.split("\n")
+        for vrstica in vsebina:
+            if vrstica != "":
+                podatek = nabor(vrstica)
+                seznam.append(podatek)
+    return seznam
 # =====================================================================@001520=
 # 3. podnaloga
 # Sestavite funkcijo `vsote`, ki sprejme imeni vhodne in izhodne datoteke. Iz
@@ -64,7 +77,13 @@
 #     Peter Klepec,8
 #     Drago Dragić,7
 # =============================================================================
-
+def vsote(vhodna, izhodna):
+    podatki = nalozi_csv(vhodna)
+    with open(izhodna, 'w', encoding='utf-8') as f:
+        for student in podatki:
+            ime = student[0]
+            vsota_tock = sum(student[1:])
+            print(ime + ',' + str(vsota_tock), file=f)
 # =====================================================================@001521=
 # 4. podnaloga
 # Sestavite funkcijo `rezultati`, ki sprejme imeni vhodne in izhodne datoteke.
@@ -94,7 +113,42 @@
 #     Janez Novak,1,3,3,2,0,9
 #     POVPRECEN STUDENT,0.67,2.00,2.00,2.00,1.33,8.00
 # =============================================================================
-
+def rezultati(vhodna, izhodna):
+    with open(vhodna, "r", encoding="utf-8") as f:
+        vrstice = [v.strip() for v in f if v.strip()]
+    
+    podatki = []
+    stolpci = None
+    
+    # obdelava vrstic
+    for vrstica in vrstice:
+        ime, *tocke = nabor(vrstica)
+        vsota = sum(tocke)
+        podatki.append((ime, tocke, vsota))
+        
+        if stolpci is None:
+            stolpci = [0] * len(tocke)
+        
+        for i, t in enumerate(tocke):
+            stolpci[i] += t
+    
+    # sortiranje po priimku
+    podatki.sort(key=lambda x: x[0].split()[1])
+    
+    n = len(podatki)
+    
+    with open(izhodna, "w", encoding="utf-8") as f:
+        # posamezni študenti
+        for ime, tocke, vsota in podatki:
+            vrstica = ime + "," + ",".join(str(x) for x in tocke) + f",{vsota}"
+            f.write(vrstica + "\n")
+        
+        # povprečja
+        povprecja = [s / n for s in stolpci]
+        vsota_povprecij = sum(povprecja)
+        
+        pov_precen = ",".join(f"{x:.2f}" for x in povprecja)
+        f.write(f"POVPRECEN STUDENT,{pov_precen},{vsota_povprecij:.2f}\n")
 
 
 

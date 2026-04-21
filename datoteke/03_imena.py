@@ -52,7 +52,18 @@ def koliko(niz, datoteka):
 # Pozor: Vhodna datoteka ima lahko več vrstic. Imena izpišite v enakem vrstnem
 # redu, kot si sledijo njihove prve pojavitve v vhodni datoteki.
 # =============================================================================
-
+def koliko_iz_datoteke(vhodna, izhodna):
+    with open(vhodna, "r", encoding="utf-8") as dat:
+        vsebina = dat.read()
+        vsebina = vsebina.replace("\n", ",")
+        imena = vsebina.split(",")
+    obdelana = []
+    with open(izhodna, "w", encoding="utf-8") as dat2:
+        for ime in imena:
+            if ime not in obdelana and ime != "":
+               stevilo = kolikokrat_se_pojavi(vsebina, ime)
+               dat2.write(f"{ime} {stevilo}\n")
+               obdelana.append(ime)
 # =====================================================================@001513=
 # 4. podnaloga
 # Sestavite funkcijo `koliko_urejen`, ki sprejme imeni vhodne in izhodne
@@ -75,9 +86,21 @@ def koliko(niz, datoteka):
 #     Luka 2
 #     Jaka 1
 # =============================================================================
+def koliko_urejen(vhodna, izhodna):
+    with open(vhodna, "r", encoding="utf-8") as f:
+        vsebina = f.read()
+    
+    imena = [ime.strip() for ime in vsebina.replace("\n", ",").split(",") if ime.strip()]
 
-
-
+    stevci = {}
+    for ime in imena:
+        stevci[ime] = stevci.get(ime, 0) + 1
+    
+    urejeno = sorted(stevci.items(), key=lambda x: (-x[1], x[0]))
+    
+    with open(izhodna, "w", encoding="utf-8") as f:
+        for ime, st in urejeno:
+            f.write(f"{ime} {st}\n")
 
 
 

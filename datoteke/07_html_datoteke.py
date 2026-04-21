@@ -23,7 +23,20 @@
 #     Jutri bo lepo vreme.
 #     Več o vremenu preberite tukaj.
 # =============================================================================
-
+def html2txt(vhodna, izhodna):
+    with open(vhodna, "r", encoding="utf-8") as dat:
+        vsebina = dat.read()
+    rezultat = []
+    znotraj = False
+    for znak in vsebina:
+        if znak == "<":
+            znotraj = True
+        elif znak == ">":
+            znotraj = False
+        elif not znotraj:
+            rezultat.append(znak)
+    with open(izhodna, "w", encoding="utf-8") as dat2:
+        dat2.write("".join(rezultat))
 # =====================================================================@001507=
 # 2. podnaloga
 # Sestavite funkcijo `tabela(ime_vhodne, ime_izhodne)`, ki bo podatke
@@ -60,7 +73,23 @@
 # Pozor: Pazi na zamik (število presledkov na začetku vrstic) v izhodni
 # datoteki.
 # =============================================================================
-
+def tabela(ime_vhodne, ime_izhodne):
+    vrstice = []
+    with open(ime_vhodne, "r", encoding="utf-8") as dat:
+        vsebina = dat.read()
+        vsebina = vsebina.strip().split("\n")
+        for vrstica in vsebina:
+            vrstica = vrstica.split(",")
+            if vrstica != "":
+                vrstice.append(vrstica)
+    with open(ime_izhodne, "w", encoding="utf-8") as dat2:
+        dat2.write("<table>\n")
+        for vrstica in vrstice:
+            dat2.write("  <tr>\n")
+            for el in vrstica:
+                dat2.write(f"    <td>{el}</td>\n")
+            dat2.write("  </tr>\n")
+        dat2.write("</table>")
 # =====================================================================@001508=
 # 3. podnaloga
 # Sestavite funkcijo `seznami(ime_vhodne, ime_izhodne)`, ki bo podatke
@@ -90,7 +119,24 @@
 #       <li>obiskati sosedo.</li>
 #     </ul>
 # =============================================================================
+def seznami(ime_vhodne, ime_izhodne):
+    seznam = False
+    with open(ime_vhodne, encoding='utf-8') as vhodna:
+        with open(ime_izhodne, 'w', encoding='utf-8') as izhodna:
+            for vrstica in vhodna:
+                if vrstica[0] == '*':
+                    if not seznam:
+                        seznam = True
+                        print('<ul>', file=izhodna)
 
+                    print('  <li>' + vrstica[1:].strip() + '</li>', file=izhodna)
+                else:
+                    if seznam:
+                        seznam = False
+                        print('</ul>', file=izhodna)
+                    print(vrstica, file=izhodna, end='')
+            if seznam:
+                print('</ul>', file=izhodna)
 # =====================================================================@001509=
 # 4. podnaloga
 # Sestavite funkcijo `gnezdeni_seznami(ime_vhodne, ime_izhodne)`, ki bo
@@ -136,42 +182,40 @@
 # 
 # Značk `<li>` ne zapirajte.
 # =============================================================================
+def gnezdeni_seznami(ime_vhodne, ime_izhodne):
+    with open(ime_vhodne, "r", encoding="utf-8") as vhod:
+        with open(ime_izhodne, "w", encoding="utf-8") as izhod:
 
+            vrstice = [v.rstrip("\n") for v in vhod]
 
+            izhod.write("<ul>\n")
+            prejsnja = 0
 
+            for vrstica in vrstice:
+                if not vrstica.strip():
+                    continue
 
+                zamik = len(vrstica) - len(vrstica.lstrip(" "))
+                globina = zamik // 2
+                vsebina = vrstica.strip()
 
+                if globina > prejsnja:
+                    while prejsnja < globina:
+                        izhod.write("  " * (prejsnja + 1) + "<ul>\n")
+                        prejsnja += 1
 
+                elif globina < prejsnja:
+                    while prejsnja > globina:
+                        izhod.write("  " * prejsnja + "</ul>\n")
+                        prejsnja -= 1
 
+                izhod.write("  " * (prejsnja + 1) + f"<li>{vsebina}\n")
 
+            while prejsnja > 0:
+                izhod.write("  " * prejsnja + "</ul>\n")
+                prejsnja -= 1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            izhod.write("</ul>\n")
 
 
 

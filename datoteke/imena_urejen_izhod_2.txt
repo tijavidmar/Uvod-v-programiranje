@@ -1,0 +1,4 @@
+Alen 3
+Boris 3
+Ciril 2
+Cilka 1

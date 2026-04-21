@@ -1,0 +1,4 @@
+Janez Novak,1,3,3,2,0
+Micka Kovaceva,0,3,2,3
+Miha Praznic
+Peter Klepec,1,0,1,2,1,3

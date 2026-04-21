@@ -17,13 +17,26 @@
 #     je 5692
 #     in 3014
 # =============================================================================
-
-
-
-
-
-
-
+def najpogostejse_besede(vhod, st_besed, izhod):
+    with open(vhod, "r", encoding="utf-8") as f:
+        vsebina = f.read().lower()
+    
+    # čiščenje ločil
+    for znak in [",", ".", "!", "?", ":", ";", "\n"]:
+        vsebina = vsebina.replace(znak, " ")
+    
+    besede = vsebina.split()
+    
+    stetje = {}
+    for b in besede:
+        stetje[b] = stetje.get(b, 0) + 1
+    
+    # sortiranje po frekvenci (padajoče)
+    urejeno = sorted(stetje.items(), key=lambda x: -x[1])
+    
+    with open(izhod, "w", encoding="utf-8") as f:
+        for beseda, st in urejeno[:st_besed]:
+            f.write(f"{beseda} {st}\n")
 
 
 

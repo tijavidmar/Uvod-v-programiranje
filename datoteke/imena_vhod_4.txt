@@ -1,0 +1,3 @@
+Luka,Jaka
+Luka,Miha,Miha
+Miha,Aleš,Aleš
