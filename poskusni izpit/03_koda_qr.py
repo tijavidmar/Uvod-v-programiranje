@@ -6,12 +6,41 @@
 # 1. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
+def matrika_nm(n, m):
+    matrika = []
+    for i in range(n):
+        matrika.append([])
+        for j in range(m):
+            matrika[i].append(None)
+    return matrika
 
+class KodaQR:
+    def __init__(self, n, m):
+        self.matrika = matrika_nm(n, m)
+
+    def __str__(self):
+        izpis = ""
+        for vrstica in self.matrika:
+            for el in vrstica:
+                if el == 0:
+                    izpis += " "
+                elif el == 1:
+                    izpis += "#"
+                elif el == None:
+                    izpis += "."
+            izpis += "\n"
+        return izpis[:-1]
 # =====================================================================@044755=
 # 2. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+    def vzorec(self, vzorec, vrsta, stolpec):
+        matrika = self.matrika
+        for i in range(len(vzorec)):
+            for el in vzorec[i]:
+                matrika[vrsta + i][stolpec] = el
+                stolpec += 1
+        return matrika
 # =====================================================================@044756=
 # 3. podnaloga
 # Navodila so napisana na listu

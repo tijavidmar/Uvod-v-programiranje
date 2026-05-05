@@ -6,12 +6,25 @@
 # 1. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+def preberi(datoteka):
+    seznam = []
+    with open(datoteka, "r", encoding="utf-8") as dat:
+        vsebina = dat.read()
+    for vrstica in vsebina:
+        vrstica = vrstica.split(",")
+        seznam.append(tuple(vrstica))
+    return seznam
 # =====================================================================@044761=
 # 2. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+def razdalja(tocka1, tocka2):
+    dolzina1 = (tocka1[0] / 60) * 1291 
+    sirina1 = (tocka1[1] / 60) * 1852
+    visina1  = tocka1[2]
+    dolzina2 = (tocka2[0] / 60) * 1291 
+    sirina2 = (tocka2[1] / 60) * 1852
+    visina2  = tocka2[2]
 # =====================================================================@044762=
 # 3. podnaloga
 # Navodila so napisana na listu

@@ -6,17 +6,63 @@
 # 1. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+def sprehod(opis):
+    x = 0
+    y = 0
+    for znak in opis:
+        if znak == "-":
+            x += 1
+        elif znak == "g":
+            x += 1
+            y += 1
+        elif znak == "d":
+            x += 1
+            y-= 1
+    return (x, y)
 # =====================================================================@044758=
 # 2. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+def strnjen_sprehod(opis):
+    x = 0
+    y = 0
+    stevilo = 1
+    for i in range(len(opis)):
+        znak = opis[i]
+        if znak.isdigit():
+            stevilo = int(znak)
+            for znak2 in opis[i + 1:]:
+                if znak2.isalpha():
+                    break
+                elif znak2.isdigit():
+                    stevilo = 10 * stevilo + int(znak2)
+        elif znak == "-":
+            x += stevilo
+            stevilo = 1
+        elif znak == "g":
+            x += stevilo
+            y += stevilo
+            stevilo = 1
+        elif znak == "d":
+            x += stevilo
+            y -= stevilo
+            stevilo = 1
+    return (x, y)
 # =====================================================================@044759=
 # 3. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-
+def najdaljsi_strnjen_sprehod(seznam):
+    max = seznam[0]
+    max_pot = strnjen_sprehod(max)
+    max_razdalja = (max_pot[0] ** 2 + max_pot[1] ** 2) ** (1/2)
+    for opis in seznam[1:]:
+        pot = strnjen_sprehod(opis)
+        razdalja = (pot[0] ** 2 + pot[1] ** 2) ** (1/2)
+        if razdalja > max_razdalja:
+            max = opis
+            max_razdalja = razdalja
+    return max
 
 
 
