@@ -22,7 +22,10 @@
 #     >>> najdi_besede("Naj da denar, preden pojde", "de")
 #     {"denar", "preden", "pojde"}
 # =============================================================================
+import re
 
+def najdi_besede(niz, podniz):
+    return set(re.findall(r"\w*" + podniz + r"\w*", niz))
 # =====================================================================@033399=
 # 2. podnaloga
 # Sestavite funkcijo `besede_s_predpono(niz, predpona)`, ki vrne množico
@@ -31,7 +34,8 @@
 #     >>> besede_s_predpono(hvalezni_medved, 'zi')
 #     {'zibala', 'zibel', 'zibelko'}
 # =============================================================================
-
+def besede_s_predpono(niz, predpona):
+    return set(re.findall(r"\b" + predpona + r"\w*", niz))
 # =====================================================================@033401=
 # 3. podnaloga
 # Sestavite funkcijo `besede_s_pripono(niz, pripona)`, ki vrne množico
@@ -40,7 +44,8 @@
 #     >>> besede_s_pripono(hvalezni_medved, 'la')
 #     {'zibala', 'razveselila', 'prestrašila', 'šivala', 'opazila', 'tla'}
 # =============================================================================
-
+def besede_s_pripono(niz, pripona):
+    return set(re.findall(r"\w*" + pripona + r"\b", niz))
 # =====================================================================@033400=
 # 4. podnaloga
 # Sestavite funkcijo `dvojne_crke(niz)`, ki vrne množico vseh besed v
@@ -53,8 +58,14 @@
 #     >>> dvojne_crke(hvalezni_medved)
 #     {"oddide"}
 # =============================================================================
+def dvojne_crke(niz):
+    mnozica = set()
+    for zadetek in re.finditer(r"\w*(\w)\1\w*", niz):
+        mnozica.add(zadetek.group())
+    return mnozica
 
-
+#group(0) je celoten vzorec
+#group(1) je to kar je znotraj prvih oklepajev
 
 
 

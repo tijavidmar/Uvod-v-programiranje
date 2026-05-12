@@ -19,7 +19,8 @@
 #     >>> odstrani_veckratne_vprasaje('Ananas')
 #     'Ananas'
 # =============================================================================
-
+def odstrani_veckratne_vprasaje(niz):
+    return re.sub(r"(\?)+", "?", niz)
 # =====================================================================@033402=
 # 2. podnaloga
 # Sestavite funkcijo `poenostavi(naloga)`, ki sprejme opis matematične
@@ -32,7 +33,8 @@
 #     >>> poenostavi("Pretvori -273,16 °C v Kelvine!")
 #     "Pretvori 10 °C v Kelvine!"
 # =============================================================================
-
+def poenostavi(naloga):
+    return re.sub(r"-?\d+(,\d+)?", "10", naloga)
 # =====================================================================@033403=
 # 3. podnaloga
 # Sestavite funkcijo `enote_na_konec(besedilo)`, ki sprejme slabo prevedeno
@@ -45,7 +47,8 @@
 #     >>> enote_na_konec("$ 1 = € 1 se mi ne zdi pošten menjalni tečaj.")
 #     "1 $ = 1 € se mi ne zdi pošten menjalni tečaj."
 # =============================================================================
-
+def enote_na_konec(besedilo):
+    return re.sub(r"([€$])\s*(\d+)", r"\2 \1", besedilo)
 
 
 

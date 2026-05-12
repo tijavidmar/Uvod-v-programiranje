@@ -26,7 +26,8 @@
 # Predpostavite lahko, da zaporedni besedi, ki se začneta z veliko začetnico,
 # predstavljata ime in priimek.
 # =============================================================================
-
+def malce_anonimiziraj(besedilo):
+    return re.sub(r"\b([A-ZŠŽČ][a-zšžč]+)\s+([A-ZŠŽČ])[a-zšžč]+", r"\1 \2.", besedilo)
 # =====================================================================@033406=
 # 2. podnaloga
 # Skrivno govorico papajščino iz slovenščine dobimo tako, da za vsak samoglasnik
@@ -43,7 +44,12 @@
 #     >>> po_papajsko("Ali je Anja doma?")
 #     "Apalipi jepe Apanjapa dopomapa?"
 # =============================================================================
+def po_papajsko(besedilo):
+    return re.sub(r"([aeiouAEIOU])", zamenjaj, besedilo)
 
+def zamenjaj(znak):
+    glas = znak.group()
+    return glas + 'p' + glas.lower()    
 # =====================================================================@033405=
 # 3. podnaloga
 # Zapiši funkcijo `cenzura(besedilo, nedopustne_besede)`, ki v
@@ -58,14 +64,12 @@
 # majhnimi črkami. To dosežemo tako, da funkciji `re.sub` podamo
 # še neobvezni argument `flags`, ki ga nastavimo na `re.IGNORECASE`.
 # =============================================================================
+def cenzura(besedilo, nedopustne_besede):
+    vzorec = "(" + "|".join(nedopustne_besede) + ")"
+    return re.sub(vzorec, samo_x, besedilo, flags=re.IGNORECASE)
 
-
-
-
-
-
-
-
+def samo_x(beseda):
+    return len(beseda.group()) * "X"
 
 
 
