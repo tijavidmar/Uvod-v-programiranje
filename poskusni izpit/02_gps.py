@@ -6,14 +6,12 @@
 # 1. podnaloga
 # Navodila so napisana na listu
 # =============================================================================
-def preberi(datoteka):
-    seznam = []
-    with open(datoteka, "r", encoding="utf-8") as dat:
-        vsebina = dat.read()
-    for vrstica in vsebina:
-        vrstica = vrstica.split(",")
-        seznam.append(tuple(vrstica))
-    return seznam
+def preberi(ime):
+    podatki = []
+    for vrstica in open(ime):
+        cas, dolzina, sirina, visina = vrstica.split(',')
+        podatki.append((float(cas), float(dolzina), float(sirina), float(visina)))
+    return podatki
 # =====================================================================@044761=
 # 2. podnaloga
 # Navodila so napisana na listu
