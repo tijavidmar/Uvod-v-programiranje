@@ -17,7 +17,12 @@
 #     >>> izlocen(['Andrej', 'Blaž', 'Cilka', 'Dunja'], 'Cilka', 4)
 #     'Blaž'
 # =============================================================================
-
+def izlocen(seznam, ime, dolzina):
+    for i in range(len(seznam)):
+        if seznam[i] == ime:
+            zacetek = i
+    izlocen_indeks = (zacetek + dolzina - 1) % len(seznam)
+    return seznam[izlocen_indeks]
 # =====================================================================@040228=
 # 2. podnaloga
 # Na voljo imamo več različnih izštevank. Vsakič uporabimo drugo, če nam jih zmanjka,
@@ -29,7 +34,15 @@
 #     >>> zmagovalec(['Andrej', 'Blaž', 'Cilka', 'Dunja'], 'Cilka', [4, 3])
 #     'Cilka'
 # =============================================================================
-
+def zmagovalec(igralci, prvi, dolzine):
+    izstevanka = 0
+    while len(igralci) > 1:
+        zadnji = izlocen(igralci, prvi, dolzine[izstevanka])
+        indeks = igralci.index(zadnji)
+        igralci.pop(indeks)
+        prvi = igralci[indeks % len(igralci)]
+        izstevanka = (izstevanka + 1) % len(dolzine)
+    return igralci[0]
 # =====================================================================@040229=
 # 3. podnaloga
 # Zanima nas, pri katerem igralcu naj začnemo igro, da bo zmagal naš favorit.
@@ -40,10 +53,11 @@
 #     >>> pri_kom_zaceti(['Andrej', 'Blaž', 'Cilka', 'Dunja'], 'Blaž', [2, 4])
 #     'Cilka'
 # =============================================================================
-
-
-
-
+def pri_kom_zaceti(igralci, favorit, dolzine):
+    for prvi in igralci:
+        zmagal = zmagovalec(igralci.copy(), prvi, dolzine)
+        if zmagal == favorit:
+            return prvi
 
 
 
