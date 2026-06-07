@@ -28,7 +28,18 @@
 #     >>> (a[0], a[1:5], a[-1])
 #     ('f', 'ranc', 'e')
 # =============================================================================
-
+class Beseda:
+    def __init__(self, beseda):
+        self.beseda = beseda
+    
+    def __repr__(self):
+        return f"Beseda('{self.beseda}')"
+    
+    def __str__(self):
+        return self.beseda
+    
+    def __getitem__(self, i):
+        return self.beseda[i]
 # =====================================================================@040192=
 # 2. podnaloga
 # V razred dodaj metodo `__lt__(self, other)`, ki vrne `True`,
@@ -42,7 +53,11 @@
 #     >>> a < a
 #     False
 # =============================================================================
-
+    def __lt__(self, other):
+        crke = "abcčdefghijklmnoprsštuvzž"
+        indeksi1 = [crke.index(crka) for crka in self.beseda]
+        indeksi2 = [crke.index(crka) for crka in other.beseda]
+        return indeksi1 < indeksi2
 # =====================================================================@040193=
 # 3. podnaloga
 # Izven razreda `Beseda` definiraj funkcijo `francetov_slovar(besede)`, ki sprejme
@@ -52,7 +67,10 @@
 #     >>> francetov_slovar(['črta', 'cena', 'dok', 'uta', 'uš'])
 #     ['cena', 'črta', 'dok', 'uš', 'uta']
 # =============================================================================
-
+def francetov_slovar(besede):
+    slovenske_besede = [Beseda(beseda) for beseda in besede]
+    slovenske_besede.sort()
+    return [b.beseda for b in slovenske_besede]
 
 
 

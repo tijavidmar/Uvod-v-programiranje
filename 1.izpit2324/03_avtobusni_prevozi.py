@@ -37,7 +37,19 @@
 #      '1A': ['Park', 'Trg', 'Gledalisce'],
 #      '2': ['Trgovina', 'Muzej', 'Sola', 'Gledalisce']}
 # =============================================================================
-
+def linije(dat):
+    slovar = {}
+    with open(dat, "r", encoding="utf-8") as vhodna:
+        vsebina = vhodna.read()
+        vsebina = vsebina.splitlines()
+    linija = None
+    for el in vsebina:
+        if el[0].isdigit():
+            linija = el
+            slovar[linija] = []
+        else:
+            slovar[linija].append(el)
+    return slovar
 # =====================================================================@040195=
 # 2. podnaloga
 # Podatki v vhodni datoteki so nekoliko nepregledni. Sestavite funkcijo `pregledno`,
@@ -57,6 +69,19 @@
 #     1A: Park -> Trg -> Gledalisce
 #     2: Trgovina -> Muzej -> Sola -> Gledalisce
 # =============================================================================
+def pregledno(slovar, izhodna):
+    with open(izhodna, "w", encoding="utf-8") as dat:
+        for linija in slovar:
+            niz = ""
+            for el in slovar[linija]:
+                niz += str(el) + " -> " 
+            dat.write(f"{linija}: {niz[:-4]}\n")
+
+#def pregledno(slovar, izhodna):
+#    with open(izhodna, "w", encoding="utf-8") as dat:
+#        for linija in slovar:
+#            postaje = " -> ".join(slovar[linija])
+#            dat.write(f"{linija}: {postaje}\n")
 
 # =====================================================================@040196=
 # 3. podnaloga
@@ -72,8 +97,19 @@
 #     >>> obstaja_povezava(slovar, 'Trg', 'Aaaaaa')
 #     None
 # =============================================================================
-
-
+def obstaja_povezava(slovar, zacetna, koncna):
+    vse_postaje = []
+    for postaje in slovar.values():
+        vse_postaje += postaje
+    if zacetna not in vse_postaje or koncna not in vse_postaje:
+        return None
+    for postaje1 in slovar.values():
+        if zacetna in postaje1:
+            for prestopna in postaje1:
+                for postaje2 in slovar.values():
+                    if prestopna in postaje2 and koncna in postaje2:
+                        return True
+    return False
 
 
 

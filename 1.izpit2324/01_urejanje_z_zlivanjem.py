@@ -12,7 +12,13 @@
 #     >>> v_katerem_je_manjsi([1, 2], [])
 #     [1, 2]
 # =============================================================================
-
+def v_katerem_je_manjsi(sez1, sez2):
+    if sez1 == []:
+        return sez2
+    elif sez1 < sez2 or sez2 == []:
+        return sez1
+    else:
+        return sez2
 # =====================================================================@040198=
 # 2. podnaloga
 # Seznama `a` in `b` zlijemo tako, da ustvarimo nov seznam in ga napolnimo s ponavljem sledečega postopka.  Izberemo element iz tistega seznama, kjer je prvi element manjši, tj., če je prvi element v `a` manjši od prvega v `b` v nov seznam izberemo prvi element iz `a`, sicer pa iz `b`. Izbrani element nato dodamo v nov seznam in ga zavržemo iz seznama, iz katerega izvira. Postopek ponavljamo, dokler ne dodamo vseh elementov iz `a` in `b`.
@@ -26,7 +32,15 @@
 #     >>> zlij([3], [2, 4, 6])
 #     [2, 3, 4, 6]
 # =============================================================================
-
+def zlij(a, b):
+    nov = []
+    while a != [] and b != []:
+        manjsi = v_katerem_je_manjsi(a, b)
+        nov.append(manjsi[0])
+        manjsi.pop(0)
+    nov.extend(a)
+    nov.extend(b)
+    return nov
 # =====================================================================@040199=
 # 3. podnaloga
 # Postopek *urejanja* sprejme seznam elementov in vrne seznam, v katerem
@@ -39,7 +53,13 @@
 #     >>> uredi([1, 3, 2, 5, 6, 7, 8, 4])
 #     [1, 2, 3, 4, 5, 6, 7, 8]
 # =============================================================================
-
+def uredi(sez):
+    if len(sez) <= 1:
+        return sez
+    sredina = len(sez) // 2
+    levi = uredi(sez[:sredina])
+    desni = uredi(sez[sredina:])
+    return zlij(levi, desni)
 
 
 
