@@ -17,7 +17,20 @@
 # 
 # velja, da je `dolzine_kitic(pesem1) == [2, 2]` in `dolzine_kitic(pesem2) == [4]`.
 # =============================================================================
-
+def dolzine_kitic(pesem):
+    dolzine = []
+    pesem = pesem.splitlines()
+    dolzina = 0
+    for vrstica in pesem:
+        if vrstica == "":
+            if dolzina != 0:
+                dolzine.append(dolzina)
+            dolzina = 0
+        else: 
+            dolzina += 1
+    if dolzina != 0:
+        dolzine.append(dolzina)
+    return dolzine
 # =====================================================================@040224=
 # 2. podnaloga
 # Veliko pesmi ima predpisano število zlogov v verzu. Napiši funkcijo
@@ -32,7 +45,44 @@
 #     >>> stevilo_zlogov("Jaz sem hrast")
 #     [1, 1, 1]
 # =============================================================================
+import re
 
+def stevilo_zlogov(verz):
+    rezultat = []
+    besede = verz.split()
+    samoglasniki = "aeiouAEIOU"
+
+    for beseda in besede:
+        # odstrani ločila
+        beseda = re.sub(r"[^a-zA-ZščžŠČŽ]", "", beseda)
+
+        if len(beseda) == 1:
+            continue
+
+        zlogi = 0
+
+        for i, znak in enumerate(beseda):
+
+            # samoglasniki
+            if znak in samoglasniki:
+                zlogi += 1
+
+            # r
+            elif znak.lower() == "r":
+                levo = beseda[i - 1] if i > 0 else ""
+                desno = beseda[i + 1] if i < len(beseda) - 1 else ""
+
+                # šteje samo, če NI med dvema soglasnikoma
+                if not (
+                    levo and desno and
+                    levo not in samoglasniki and
+                    desno not in samoglasniki
+                ):
+                    zlogi += 1
+
+        rezultat.append(zlogi)
+
+    return rezultat
 # =====================================================================@040226=
 # 3. podnaloga
 # Veliko pesmi ima predpisan tudi ritem, torej morajo biti poudarjeni zlogi

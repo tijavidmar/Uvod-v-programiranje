@@ -11,7 +11,14 @@
 #     >>> pogostost("abeceda")
 #     {'a': 2, 'b': 1, 'e': 2, 'c': 1, 'd': 1}
 # =============================================================================
-
+def pogostost(niz):
+    ponovitve = {}
+    for crka in niz:
+        if crka not in ponovitve:
+            ponovitve[crka] = 1
+        else:
+            ponovitve[crka] += 1
+    return ponovitve
 # =====================================================================@040267=
 # 2. podnaloga
 # Znake bomo po pogostosti gnezdili tako, da bom začeli z najredkejšim
@@ -33,7 +40,16 @@
 # ter znake gnezdi na zgornji način. Predpostavite lahko, da se pogostosti ne
 # ponavljajo ter, da je znak vsaj eden.
 # =============================================================================
+def gnezdi(pogostosti):
+    urejeno = sorted(pogostosti.items(), key=lambda x: x[1])
 
+    znak, _ = urejeno[0]
+    gnezdo = (znak,)
+
+    for znak, _ in urejeno[1:]:
+        gnezdo = (znak, gnezdo)
+
+    return gnezdo
 # =====================================================================@040268=
 # 3. podnaloga
 # Indeks nekega znaka v danem gnezdu bomo poiskali tako, da bomo zabeležili kakšno zaporedje
@@ -52,10 +68,24 @@
 # Sestavite funkcijo `indeks`, ki sprejme gnezdo in znak, ter vrne znakov indeks
 # v podanem gnezdu. Če znaka v gnezdu ni, naj funkcija vrne `None`.
 # =============================================================================
+def indeks(gnezdo, znak):
+    if not gnezdo:
+        return None
 
+    # našli znak
+    if gnezdo[0] == znak:
+        return (0,)
 
+    # če ni več nadaljevanja
+    if len(gnezdo) < 2:
+        return None
 
+    podrezultat = indeks(gnezdo[1], znak)
 
+    if podrezultat is None:
+        return None
+
+    return (1,) + podrezultat
 
 
 

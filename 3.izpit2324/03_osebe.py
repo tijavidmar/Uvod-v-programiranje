@@ -23,7 +23,22 @@
 #  - se EMŠO začne z datumom rojstva (prva števka letnice je izpuščena),
 #    ki mu sledi število 500 (moški) ali 505 (ženske).
 # =============================================================================
+class Oseba:
+    def __init__(self, ime, priimek, emso):
+        self.ime = ime
+        self.priimek = priimek
+        self.emso = emso
+        if str(emso)[7:10] == "500":
+            self.spol = "M"
+        else:
+            self.spol = "Ž"
 
+    def __repr__(self):
+        if str(self.emso)[4] == "9":
+            leto = "1" + str(self.emso)[4:7]
+        else:
+            leto = "2" + str(self.emso)[4:7]
+        return f"{self.ime} {self.priimek} ({self.spol}, {int(leto)})"
 # =====================================================================@040353=
 # 2. podnaloga
 # Ljudje se v 21. stoletju poročajo na vse mogoče načine.
@@ -34,7 +49,18 @@
 # - Če se poročita moška, naj si priimka izmenjata,
 # - Če se poročita ženski, naj vsaka v svoj priimek na konec doda priimek druge.
 # =============================================================================
-
+    def poroci(self, druga_oseba):
+        if self.spol == "Ž" and druga_oseba.spol == "M":
+            druga_oseba.priimek = self.priimek
+        elif self.spol == "M" and druga_oseba.spol == "Ž":
+            self.priimek = druga_oseba.priimek
+        elif self.spol == "M" and druga_oseba.spol == "M":
+            self.priimek, druga_oseba.priimek = druga_oseba.priimek, self.priimek
+        else:
+            prvi = self.priimek
+            drugi = druga_oseba.priimek
+            self.priimek = prvi + " " + drugi
+            druga_oseba.priimek = drugi + " " + prvi
 # =====================================================================@040354=
 # 3. podnaloga
 # SURS zanima, katera so tri najpogostejša imena (po spolih) bodisi na splošno
@@ -54,6 +80,33 @@
 # Seznam naj bo padajoče urejen po številu pojavitev imena. Če se imeni
 # pojavita enako pogosto, naj bosta urejeni po abecedi. Obdobje je zaprti interval.
 # =============================================================================
+from collections import defaultdict
+
+def najpogostejsa_imena(osebe, spol, obdobje=(1900, 2026)):
+    stetje = defaultdict(int)
+
+    start, end = obdobje
+
+    for oseba in osebe:
+        if oseba.spol != spol:
+            continue
+
+        # EMŠO → leto rojstva
+        emso = str(oseba.emso)
+        leto = 1900 + int(emso[4:6])
+
+        # filter obdobja
+        if not (start <= leto <= end):
+            continue
+
+        # KLJUČNO: štejejo VSA imena
+        for ime in oseba.ime.split():
+            stetje[ime] += 1
+
+    # sortiranje: po frekvenci ↓, nato abecedi ↑
+    urejeno = sorted(stetje.items(), key=lambda x: (-x[1], x[0]))
+
+    return [ime for ime, _ in urejeno[:3]]
 
 
 
