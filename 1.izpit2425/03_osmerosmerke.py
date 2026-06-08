@@ -29,7 +29,17 @@
 #     >>> preveri_besedo(mreza, 'plaz', (1, 4), (1, 0))
 #     False
 # =============================================================================
-
+def preveri_besedo(mreza, beseda, zacetek, smer):
+    visina = len(mreza)
+    sirina = len(mreza[0])
+    i, j = zacetek
+    di, dj = smer
+    for crka in beseda:
+        if i < 0 or j < 0 or i >= visina or j >= sirina or crka != mreza[i][j]:
+            return False
+        i += di
+        j += dj
+    return True
 # =====================================================================@042958=
 # 2. podnaloga
 # Sestavi funkcijo `poisci_besedo(mreza, beseda)`, ki v mreži `mreza` poišče
@@ -41,7 +51,19 @@
 #     >>> poisci_besedo(mreza, 'plaz')
 #     None
 # =============================================================================
+def poisci_besedo(mreza, beseda):
+    smeri = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1),           (0, 1),
+        (1, -1),  (1, 0),  (1, 1)
+    ]
+    for i in range(len(mreza)):
+        for j in range(len(mreza[0])):
+            for smer in smeri:
+                if preveri_besedo(mreza, beseda, (i, j), smer):
+                    return ((i, j), smer)
 
+    return None
 # =====================================================================@042959=
 # 3. podnaloga
 # Osmerosmerke si običajno pripravimo na datotekah, in sicer ločeno mrežo ter
@@ -71,7 +93,47 @@
 #     >>> osmerosmerka('mreza.txt', 'besede.txt')
 #     'oslo'
 # =============================================================================
+def osmerosmerka(dat_mreza, dat_besede):
+    # preberi mrežo
+    with open(dat_mreza, "r", encoding="utf-8") as f:
+        mreza = [list(vrstica.strip()) for vrstica in f]
 
+    # preberi besede
+    with open(dat_besede, "r", encoding="utf-8") as f:
+        besede = [vrstica.strip() for vrstica in f]
+
+    obiskani = [[False for _ in vrstica] for vrstica in mreza]
+
+    smeri = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1),           (0, 1),
+        (1, -1),  (1, 0),  (1, 1)
+    ]
+
+    def označi(i, j, beseda, dx, dy):
+        for _ in beseda:
+            obiskani[i][j] = True
+            i += dx
+            j += dy
+
+    # poišči vse besede in jih označi
+    for beseda in besede:
+        for i in range(len(mreza)):
+            for j in range(len(mreza[0])):
+                for dx, dy in smeri:
+                    if preveri_besedo(mreza, beseda, (i, j), (dx, dy)):
+                        označi(i, j, beseda, dx, dy)
+                        break
+
+    # zberi neprečrtane črke
+    rezultat = ""
+
+    for i in range(len(mreza)):
+        for j in range(len(mreza[0])):
+            if not obiskani[i][j]:
+                rezultat += mreza[i][j]
+
+    return rezultat
 
 
 

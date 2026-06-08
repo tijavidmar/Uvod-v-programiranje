@@ -37,7 +37,14 @@
 #     >>> stisni(pogovor2)
 #     ('Živjo svet', 1, 2)
 # =============================================================================
-
+def stisni(pogovor):
+    naslov = pogovor["naslov"]
+    sporocila = pogovor["sporocila"]
+    sodelujoci = []
+    for sporocilo in sporocila:
+        if sporocilo[0] not in sodelujoci:
+            sodelujoci.append(sporocilo[0])
+    return (naslov, len(sodelujoci), len(sporocila))
 # =====================================================================@042961=
 # 2. podnaloga
 # Sestavite funkcijo `klepetulja`, ki sprejme seznam pogovorov (opisanih kot zgoraj),
@@ -51,7 +58,24 @@
 #     >>> klepetulja([pogovor1, pogovor3])
 #     'Tea'
 # =============================================================================
+def klepetulja(pogovori):
+    for pogovor in pogovori:
+        sporocila = pogovor["sporocila"]
+    sodelujoci = {}
+    for sporocilo in sporocila:
+        if sporocilo[0] not in sodelujoci:
+            sodelujoci[sporocilo[0]] = 1
+        else:
+            sodelujoci[sporocilo[0]] += 1
 
+    max_oseba = None
+    max_stevilo = 0
+    for oseba, stevilo in sodelujoci.items():
+        if stevilo > max_stevilo:
+            max_stevilo = stevilo
+            max_oseba = oseba
+
+    return max_oseba
 # =====================================================================@042962=
 # 3. podnaloga
 # Opazimo, da so pri izvozu podatkov vsi čustvenčki postali besedilo oblike `:custvencek:`; v zgornjih primerih opazimo `:thumbsup:` in `:cry:`.
@@ -65,8 +89,16 @@
 #     >>> custvencki([pogovor3])
 #     set()
 # =============================================================================
+import re
 
-
+def custvencki(pogovori):
+    emojiji = set()
+    for pogovor in pogovori:
+        for sporocilo in pogovor["sporocila"]:
+            besedilo = sporocilo[1]
+            najdeni = re.findall(r":[a-z]+:", besedilo)
+            emojiji.update(najdeni)
+    return emojiji
 
 
 

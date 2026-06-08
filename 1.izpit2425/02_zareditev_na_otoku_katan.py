@@ -18,7 +18,14 @@
 # 
 # _Pozor:_ če argumetna `vsota` ne podamo, mora biti rezultat naključen.
 # =============================================================================
+import random
 
+def roka_usode(vsota=None):
+    if vsota != None:
+        return vsota
+    kocka1 = random.randint(1, 6)
+    kocka2 = random.randint(1, 6)
+    return kocka1 + kocka2
 # =====================================================================@042956=
 # 2. podnaloga
 # Sestavite razred `Naseljenec`, ki bo predstavljal zarejenega naseljenca.
@@ -26,7 +33,17 @@
 # pa naj pripravi še atributa `dobrine`, ki začne kot prazen seznam, in `rop`, ki
 # začne kot prazen slovar. Dodajte še ustrezni metodi `__str__` in `__repr__` (pravilnosti ene izmed njiju Tomo ne preverja).
 # =============================================================================
+class Naseljenec:
+    def __init__(self, ime):
+        self.ime = ime
+        self.dobrine = []
+        self.rop = {}
 
+    def __str__(self):
+        return f"{self.ime}, {self.dobrine}, {self.rop}"
+
+    def __repr__(self):
+        return f"Naseljenec('{self.ime}')"
 # =====================================================================@042960=
 # 3. podnaloga
 # Razredu dodajte še metodo `ropa`, ki doda novo surovino za ropanje. 
@@ -61,9 +78,18 @@
 #     >>> ana.dobrine
 #     ['ovca', 'kamen', 'pšenica']
 # =============================================================================
+    def ropa(self, stevilo, niz):
+        if stevilo not in self.rop:
+            self.rop[stevilo] = []
+        self.rop[stevilo].append(niz)
 
-
-
+    def usoda(self, stevilo):
+        nove = []
+        if stevilo in self.rop:
+            for dobrina in self.rop[stevilo]:
+                self.dobrine.append(dobrina)
+                nove.append(dobrina)
+        return nove
 
 
 
