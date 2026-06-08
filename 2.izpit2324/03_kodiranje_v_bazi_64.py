@@ -82,6 +82,23 @@ kodirna_tabela = {
     '001111': 'P', '011111': 'f', '101111': 'v', '111111': '/',
 }
 
+def pravilna_koda(niz):
+    veljavni = set(kodirna_tabela.values())
+    # preštej '=' na koncu
+    enacaji = 0
+    while niz.endswith("="):
+        enacaji += 1
+        niz = niz[:-1]
+    if enacaji > 2:
+        return False
+    # v preostanku ne sme biti '='
+    if "=" in niz:
+        return False
+    # vsi ostali znaki morajo biti veljavni
+    for znak in niz:
+        if znak not in veljavni:
+            return False
+    return True    
 # =====================================================================@040212=
 # 2. podnaloga
 # Sestavite funkcijo `zakodiraj`, ki sprejme bitni zapis (kot niz) in ga zakodira v bazi 64.
@@ -93,7 +110,20 @@ kodirna_tabela = {
 #     >>> zakodiraj('01100010011000010111101001100001')
 #     'YmF6YQ=='
 # =============================================================================
-
+def zakodiraj(bitni_zapis):
+    dodani_pari = 0
+    if len(bitni_zapis) % 6 == 4:
+        bitni_zapis += "00"
+        dodani_pari = 1
+    elif len(bitni_zapis) % 6 == 2:
+        bitni_zapis += "0000"
+        dodani_pari = 2
+    rezultat = ""
+    for i in range(0, len(bitni_zapis), 6):
+        blok = bitni_zapis[i:i + 6]
+        rezultat += kodirna_tabela[blok]
+    rezultat += "=" * dodani_pari
+    return rezultat
 # =====================================================================@040213=
 # 3. podnaloga
 # Sestavite funkcijo `odkodiraj`, ki sprejme niz zakodiran v bazi 64 in ga odkodira v bitni zapis (kot niz). Privzamete lahko, da je zakodirani niz veljaven.
@@ -105,7 +135,23 @@ kodirna_tabela = {
 #     >>> odkodiraj('YmF6YQ==')
 #     '01100010011000010111101001100001'
 # =============================================================================
+def odkodiraj(niz):
+    st_enacajev = niz.count("=")
 
+    niz = niz.rstrip("=")
+
+    rezultat = ""
+
+    for znak in niz:
+        for biti, crka in kodirna_tabela.items():
+            if crka == znak:
+                rezultat += biti
+                break
+
+    if st_enacajev > 0:
+        rezultat = rezultat[:-2 * st_enacajev]
+
+    return rezultat
 
 
 

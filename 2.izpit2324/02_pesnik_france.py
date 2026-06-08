@@ -22,7 +22,16 @@
 # 
 # naj funkcija vrne 5. Vsi komentarji se začnejo z znakom `#`.
 # =============================================================================
-
+def prestej_vrstice(datoteka):
+    stevilo = 0
+    with open(datoteka, "r", encoding="utf-8") as dat:
+        for vrstica in dat:
+            vrstica = vrstica.strip()
+            if vrstica == "" or vrstica.startswith("#"):
+                continue
+            else:
+                stevilo += 1
+    return stevilo
 # =====================================================================@040209=
 # 2. podnaloga
 # France ne razume dobro razlike med `print` in `return`.
@@ -36,7 +45,18 @@
 #             print('France', 'Pesnik', file=f)             print('France', 'Pesnik', file=f)
 #         print(True)                                   return True
 # =============================================================================
-
+def odstrani_printe(slaba, popravljena):
+    with open(slaba, "r", encoding="utf-8") as dat:
+        vrstice = dat.readlines()
+    nove_vrstice = []
+    for vrstica in vrstice:
+        if "print(" in vrstica and "file=" not in vrstica:
+            zamik = vrstica[:len(vrstica) - len(vrstica.lstrip())]
+            vsebina = vrstica.strip()[6:-1]   # odstrani print( in )
+            vrstica = zamik + "return " + vsebina + "\n"
+        nove_vrstice.append(vrstica)
+    with open(popravljena, "w", encoding="utf-8") as f:
+        f.writelines(nove_vrstice)
 # =====================================================================@040210=
 # 3. podnaloga
 # France še ni odkril, da lahko npr. namesto `x = x + 2` napiše `x += 2`.
@@ -53,9 +73,19 @@
 # Privzameš lahko, da France sešteva/odšteva le naravna števila in so imena 
 # spremenljivk iz malih angleških črk ter podčrtajev (npr. `novi_stevec`).
 # =============================================================================
+import re
 
+def poenostavi(slaba, popravljena):
+    vzorec1 = r"([a-z_]+) = \1 ([+-]) (\d+)"  # x = x +- 2 ==> x +-= 2
+    vzorec2 = r"([a-z_]+) = (\d+) \+ \1"      # x = 2 + x  ==> x += 2
+    with open(slaba, encoding="utf-8") as f:
+        vsebina = f.read()
 
+    vsebina = re.sub(vzorec1, r"\1 \2= \3", vsebina)
+    vsebina = re.sub(vzorec2, r"\1 += \2", vsebina)
 
+    with open(popravljena, "w", encoding="utf-8") as f:
+        f.write(vsebina)
 
 
 
