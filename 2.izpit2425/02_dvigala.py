@@ -30,7 +30,13 @@
 #     >>> repr(dvigalo)
 #     'Dvigalo(3, [1, 5, 0, 4])'
 # =============================================================================
+class Dvigalo:
+    def __init__(self, trenuten_polozaj=0, postanki=None):
+        self.nadstropje = trenuten_polozaj
+        self.postanki = [] if postanki is None else postanki
 
+    def __repr__(self):
+        return f"Dvigalo({self.nadstropje}, {self.postanki})"
 # =====================================================================@042994=
 # 2. podnaloga
 # Razredu `Dvigalo` dodajte metodo `razdalja`, ki izračuna in vrne razdaljo
@@ -42,7 +48,17 @@
 #     >>> dvigalo.razdalja(2)
 #     17
 # =============================================================================
-
+    def razdalja(self, cilj):
+        if self.postanki == []:
+            return abs(self.nadstropje - cilj)
+        else:
+            pot = abs(self.nadstropje - self.postanki[0])
+            i = 1
+            while i < len(self.postanki):
+                pot += abs(self.postanki[i - 1] - self.postanki[i])
+                i += 1
+            pot += abs(self.postanki[len(self.postanki) - 1] - cilj)
+        return pot
 # =====================================================================@042995=
 # 3. podnaloga
 # Sestavite še funkcijo `klic(nadstropje, dvigala)`, ki v seznamu dvigal 
@@ -53,6 +69,16 @@
 #     >>> klic(3, [dvigalo, Dvigalo()])
 #     1
 # =============================================================================
+def klic(nadstropje, dvigala):
+    najblizji = 0
+    najmanjsa_razdalja = dvigala[0].razdalja(nadstropje)
+    for i in range(1, len(dvigala)):
+        razdalja = dvigala[i].razdalja(nadstropje)
+        if razdalja < najmanjsa_razdalja:
+            najmanjsa_razdalja = razdalja
+            najblizji = i
+
+    return najblizji
 
 
 

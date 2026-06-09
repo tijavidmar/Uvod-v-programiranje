@@ -31,7 +31,15 @@
 #         "kajmak": 3
 #     }
 # =============================================================================
-
+def zbrano(prispevki):
+    slovar = {}
+    for hrana in prispevki.values():
+        for jed, kolicina in hrana.items():
+            if jed not in slovar:
+                slovar[jed] = kolicina
+            else:
+                slovar[jed] += kolicina
+    return slovar
 # =====================================================================@042999=
 # 2. podnaloga
 # Prijatelje zanima, koliko je posameznik prispeval k uspehu piknika. V slovarju
@@ -54,7 +62,13 @@
 #         "Francka": 0
 #     }
 # =============================================================================
-
+def prispevki_oseb(prispevki, cene):
+    skupno = {}
+    for oseba, hrana in prispevki.items():
+        skupno[oseba] = 0
+        for jed, kolicina in hrana.items():
+            skupno[oseba] += kolicina * cene[jed]
+    return skupno
 # =====================================================================@043000=
 # 3. podnaloga
 # Da bodo pikniki v prihodnje bolj pravični, so se odločili, da preverijo dolg
@@ -75,7 +89,16 @@
 #         "Francka": 12.9
 #     }
 # =============================================================================
-
+def dolzniki(prispevki, cene):
+    vrednosti = prispevki_oseb(prispevki, cene)
+    skupna_cena = sum(vrednosti.values())
+    pravicen_del = skupna_cena / len(vrednosti)
+    dolgovi = {}
+    for oseba, prispevek in vrednosti.items():
+        if prispevek < pravicen_del:
+            dolgovi[oseba] = pravicen_del - prispevek
+    return dolgovi
+    
 
 
 

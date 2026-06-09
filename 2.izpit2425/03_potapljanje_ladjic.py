@@ -21,7 +21,33 @@
 # Igralno ploščo predstavite s tabelo na sledeč način: če je na dani koordinati ladjica
 # naj bo na tem mestu znak lojtra `'#'`, sicer pa naj bo na tej koordinati presledek `' '`.
 # =============================================================================
+def preberi_ladjice(vhodna, dimenzija):
+    plosca = [[' ' for _ in range(dimenzija)]
+              for _ in range(dimenzija)]
 
+    with open(vhodna) as f:
+        for vrstica in f:
+            r, s, smer, dolzina = vrstica.strip().split(',')
+
+            r = int(r) - 1
+            s = int(s) - 1
+            dolzina = int(dolzina)
+
+            if smer == '>':
+                if s + dolzina > dimenzija:
+                    continue
+
+                for i in range(dolzina):
+                    plosca[r][s + i] = '#'
+
+            else:  # smer == 'v'
+                if r + dolzina > dimenzija:
+                    continue
+
+                for i in range(dolzina):
+                    plosca[r + i][s] = '#'
+
+    return plosca
 # =====================================================================@042984=
 # 2. podnaloga
 # Za lepšo vizalno predstavitev bomo igralno ploščo predstavili na preprostejši način. To bomo storili tako, da vsebino plošče strnemo v niz,
