@@ -14,7 +14,19 @@ class Oseba:
 
     def __eq__(self, other):
         return (self.ime, self.priimek, self.vzdevek) == (other.ime, other.priimek, other.vzdevek)
+    
+    def __repr__(self):
+        if self.vzdevek is not None:
+            return f"Oseba('{self.ime}', '{self.priimek}', vzdevek='{self.vzdevek}')"
+        else: 
+            return f"Oseba('{self.ime}', '{self.priimek}', vzdevek={self.vzdevek})"
 
+
+    def __str__(self):
+        if self.vzdevek is None:
+            return f"{self.ime} {self.priimek}"
+        else:
+            return f'{self.ime} "{self.vzdevek}" {self.priimek}'
 # =====================================================================@043024=
 # 2. podnaloga
 # Razredu `Imenik` dodajte metodo `dodaj`, ki kot argumenta prejme telefonsko številko (predstavljeno kot niz) in osebo, ter si pod podano številko shrani podano osebo. Metoda naj preveri, da je telefonska številka veljavna, tj., vsebuje lahko le števke, z izjemo prvega znaka, ki je lahko znak `+`. Metoda naj preveri še, da je podana oseba res objekt razreda `Oseba`; tu si lahko pomagate z vgrajeno funkcijo `isinstance`. Če številka ali oseba nista veljavni, naj metoda ne naredi ničesar.
@@ -22,6 +34,19 @@ class Oseba:
 class Imenik:
     def __init__(self):
         self.imenik = {}
+
+    def dodaj(self, tel_st, oseba):
+        if not isinstance(oseba, Oseba):
+            return None
+        if not tel_st:
+            return None
+        if tel_st[0] == '+':
+            ostalo = tel_st[1:]
+        else:
+            ostalo = tel_st
+        if not ostalo.isdigit():
+            return None
+        self.imenik[tel_st] = oseba
 
 # =====================================================================@043025=
 # 3. podnaloga
@@ -39,7 +64,15 @@ class Imenik:
 #     >>> i.klice('654321')
 #     'Kliče: neznana številka'
 # =============================================================================
-
+    def klice(self, tel_st):
+        if tel_st in self.imenik:
+            oseba = self.imenik[tel_st]
+            if oseba.vzdevek is not None:
+                return f'Kliče: {oseba.ime} "{oseba.vzdevek}" {oseba.priimek}'
+            else:
+                return f'Kliče: {oseba.ime} {oseba.priimek}'
+        else:
+            return "Kliče: neznana številka"
 
 
 

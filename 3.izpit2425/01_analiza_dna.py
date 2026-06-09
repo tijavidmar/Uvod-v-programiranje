@@ -18,7 +18,15 @@
 #     >>> komplement('ATGgCTA')
 #     None
 # =============================================================================
-
+def komplement(dna):
+    kompl = ""
+    nukleotidi = {"A": "T", "T": "A", "G": "C", "C": "G"}
+    for nukleotid in dna:
+        if nukleotid not in nukleotidi:
+            return None
+        else:
+            kompl += nukleotidi[nukleotid]
+    return kompl
 # =====================================================================@043020=
 # 2. podnaloga
 # *Bralni okvir* je ena od treh možnosti branja zaporedja DNA v obliki 
@@ -35,7 +43,15 @@
 #     >>> bralni_okvir('xTGATTCA', 2)
 #     None
 # =============================================================================
-
+def bralni_okvir(dna, indeks):
+    for nukleotid in dna:
+        if nukleotid not in "ATGC":
+            return None
+    kodoni = []
+    while indeks + 3 <= len(dna):
+        kodoni.append(dna[indeks:indeks + 3])
+        indeks += 3
+    return kodoni
 # =====================================================================@043022=
 # 3. podnaloga
 # V DNA zaporedju se gen začne z začetnim kodonom `ATG` in konča pri prvem
@@ -53,7 +69,21 @@
 # 
 # Namig: Zanko predčasno končamo z ukazom `break`.
 # =============================================================================
-
+def najdaljsi_gen(okvir):
+    zacetni_kodon = 'ATG'
+    stop_kodoni = {'TAA', 'TAG', 'TGA'}
+    gen = None
+    gen_dolzina = 0
+    for i in range(len(okvir)):
+        if okvir[i] == zacetni_kodon:
+            for j in range(i + 1, len(okvir)):
+                if okvir[j] in stop_kodoni:
+                    dolzina = j - i + 1
+                    if dolzina > gen_dolzina:
+                        gen = okvir[i:j + 1]
+                        gen_dolzina = dolzina
+                    break
+    return gen
 
 
 

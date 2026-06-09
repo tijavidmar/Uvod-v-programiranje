@@ -43,7 +43,32 @@
 #     >>> je_veljaven([("START", 0), ("A", 5), ("B", 6), ("CILJ", 11)], proga1)
 #     False
 # =============================================================================
+def je_veljaven(tek, proga):
+    if tek[0][0] != "START" or tek[-1][0] != "CILJ":
+        return False
 
+    # vzamemo samo točke iz proge
+    filtriran = [(t, c) for t, c in tek if t in proga]
+
+    # preverimo vrstni red glede na progo
+    i = 0
+    for t, c in filtriran:
+        if t == proga[i]:
+            i += 1
+            if i == len(proga):
+                return True
+
+        elif t == "START" or t == "CILJ":
+            continue
+        else:
+            # napačen vrstni red: če pride točka iz prihodnosti prehitro
+            # (npr. E pred A)
+            if t in proga and proga.index(t) > i:
+                continue
+            if t in proga and proga.index(t) < i:
+                return False
+
+    return i == len(proga)
 # =====================================================================@043027=
 # 2. podnaloga
 # Napiši funkcijo `zmagovalec(tekmovalci, proga)`, ki poišče indeks zmagovalca
